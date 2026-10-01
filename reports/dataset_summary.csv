@@ -1,0 +1,6 @@
+source_dataset,rows,finite_log_s,missing_smiles,valid_structures,invalid_or_missing_structures,unique_parent_molecules,multifragment_observations,log_s_min,log_s_median,log_s_max
+AQUA,1311,1311,0,1311,0,1302,0,-11.62,-2.49,1.58
+AqSolDB,9982,9982,0,9980,2,9560,1098,-13.1719,-2.61817341795,2.1376816201
+Delaney,1128,1128,0,1128,0,1117,0,-11.6,-2.86,1.58
+OCHEM,36449,36447,1032,35381,1068,10577,251,-13.2,-2.25,13.2
+PHYSPROP,2010,2010,0,2010,0,2010,0,-12.06,-2.395,1.581

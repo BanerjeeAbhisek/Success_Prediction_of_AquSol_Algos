@@ -1,0 +1,72 @@
+{
+  "blocking_errors": [],
+  "duplicate_observation_ids": 0,
+  "finite_log_s": 50878,
+  "model_eligible_observations": 49808,
+  "observations_by_source": {
+    "AQUA": {
+      "finite_log_s": 1311,
+      "invalid_or_missing_structures": 0,
+      "log_s_max": 1.58,
+      "log_s_median": -2.49,
+      "log_s_min": -11.62,
+      "missing_smiles": 0,
+      "multifragment_observations": 0,
+      "rows": 1311,
+      "unique_parent_molecules": 1302,
+      "valid_structures": 1311
+    },
+    "AqSolDB": {
+      "finite_log_s": 9982,
+      "invalid_or_missing_structures": 2,
+      "log_s_max": 2.1376816201,
+      "log_s_median": -2.61817341795,
+      "log_s_min": -13.1719,
+      "missing_smiles": 0,
+      "multifragment_observations": 1098,
+      "rows": 9982,
+      "unique_parent_molecules": 9560,
+      "valid_structures": 9980
+    },
+    "Delaney": {
+      "finite_log_s": 1128,
+      "invalid_or_missing_structures": 0,
+      "log_s_max": 1.58,
+      "log_s_median": -2.86,
+      "log_s_min": -11.6,
+      "missing_smiles": 0,
+      "multifragment_observations": 0,
+      "rows": 1128,
+      "unique_parent_molecules": 1117,
+      "valid_structures": 1128
+    },
+    "OCHEM": {
+      "finite_log_s": 36447,
+      "invalid_or_missing_structures": 1068,
+      "log_s_max": 13.2,
+      "log_s_median": -2.25,
+      "log_s_min": -13.2,
+      "missing_smiles": 1032,
+      "multifragment_observations": 251,
+      "rows": 36449,
+      "unique_parent_molecules": 10577,
+      "valid_structures": 35381
+    },
+    "PHYSPROP": {
+      "finite_log_s": 2010,
+      "invalid_or_missing_structures": 0,
+      "log_s_max": 1.581,
+      "log_s_median": -2.395,
+      "log_s_min": -12.06,
+      "missing_smiles": 0,
+      "multifragment_observations": 0,
+      "rows": 2010,
+      "unique_parent_molecules": 2010,
+      "valid_structures": 2010
+    }
+  },
+  "status": "pass",
+  "total_observations": 50880,
+  "unique_parent_molecules": 13573,
+  "valid_structures": 49810
+}

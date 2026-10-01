@@ -6,8 +6,3 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 
-# Generated data products
-data_processed/*.csv
-data_processed/*.parquet
-reports/*.csv
-reports/*.json
