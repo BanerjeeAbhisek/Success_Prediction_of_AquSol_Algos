@@ -2,8 +2,6 @@
 
 This directory is populated by `aquasol-build-master`.
 
-Generated files are not committed by default:
-
 - `master_observations.csv` and `.parquet`: one row per original observation.
 - `molecule_summary.csv` and `.parquet`: descriptive summaries by standardized parent molecule.
 
