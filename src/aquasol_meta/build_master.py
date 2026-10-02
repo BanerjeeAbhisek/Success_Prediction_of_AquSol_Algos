@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from .build_targets import build_target_artifacts
 from .deduplicate import build_molecule_summary, build_source_overlap
 from .ingest import load_all_sources
 from .standardize import standardize_dataframe
@@ -100,6 +101,15 @@ def build_master_dataset(
     if errors:
         joined = "\n- ".join(errors)
         raise RuntimeError(f"Master-data validation failed:\n- {joined}")
+
+    paths.update(
+        build_target_artifacts(
+            observations=observations,
+            output_dir=output_dir,
+            reports_dir=reports_dir,
+            write_csv=write_csv,
+        )
+    )
     return paths
 
 

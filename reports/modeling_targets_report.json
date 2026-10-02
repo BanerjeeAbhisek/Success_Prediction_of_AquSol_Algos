@@ -1,0 +1,30 @@
+{
+  "all_data_benchmark_molecules": 13572,
+  "blocking_errors": [],
+  "conflict_stress_test_molecules": 4349,
+  "outside_target_review_range": 255,
+  "primary_benchmark_molecules": 8969,
+  "primary_exclusion_reason_counts": {
+    "high_conflict_and_outside_review_range": 1,
+    "high_measurement_conflict": 4348,
+    "included": 8969,
+    "outside_target_review_range": 254
+  },
+  "represented_model_eligible_observations": 49808,
+  "status": "pass",
+  "target_reliability_counts": {
+    "consistent_replicates": 2939,
+    "high_conflict": 4349,
+    "moderate_disagreement": 321,
+    "single_observation": 5963
+  },
+  "target_resolution_method": "median_of_all_model_eligible_observations",
+  "target_unit": "log10(mol/L)",
+  "thresholds": {
+    "conflict_range_min": 1.0,
+    "consistent_range_max": 0.5,
+    "review_log_s_max": 2.5,
+    "review_log_s_min": -15.0
+  },
+  "total_molecules": 13572
+}

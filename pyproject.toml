@@ -24,6 +24,8 @@ dev = [
 
 [project.scripts]
 aquasol-build-master = "aquasol_meta.build_master:main"
+aquasol-build-targets = "aquasol_meta.build_targets:main"
+aquasol-build-features = "aquasol_meta.build_features:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -39,4 +41,3 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
-

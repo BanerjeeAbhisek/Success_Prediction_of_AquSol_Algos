@@ -1,0 +1,5 @@
+target_reliability,molecules,primary_benchmark_molecules,median_observations,median_log_s_range,median_log_s_target,percent_of_molecules
+consistent_replicates,2939,2939,2.0,0.0,-2.52,21.654877689360447
+high_conflict,4349,0,5.0,5.0,-2.38,32.043913940465664
+moderate_disagreement,321,321,4.0,0.7530000000000001,-0.383,2.3651635720601236
+single_observation,5963,5709,1.0,0.0,-2.6214335505,43.93604479811376

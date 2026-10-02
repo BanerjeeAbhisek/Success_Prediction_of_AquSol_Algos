@@ -1,0 +1,83 @@
+{
+  "blocking_errors": [],
+  "calculation_failures": [],
+  "descriptor_calculation_failures": [
+    {
+      "descriptor": "SPS",
+      "molecule_id": "UFHFLCQGNIYNRP-OUBTZVSYSA-N",
+      "reason": "ZeroDivisionError: division by zero"
+    }
+  ],
+  "leakage_control": "Feature tables contain molecule identifiers and structure-derived values only; logS targets, source provenance, reliability classes, and benchmark flags are excluded.",
+  "molecule_id_sha256": "85105e78597e66b7bb76c3716b6607e47d9bee3cc599836daa79e43d57b303fc",
+  "molecules": 13572,
+  "output_files": {
+    "maccs_fingerprints": {
+      "bytes": 451561,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/maccs_fingerprints.parquet"
+    },
+    "maccs_fingerprints_csv": {
+      "bytes": 4914746,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/maccs_fingerprints.csv"
+    },
+    "morgan_fingerprints": {
+      "bytes": 1860203,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/morgan_fingerprints.parquet"
+    },
+    "morgan_fingerprints_csv": {
+      "bytes": 55995516,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/morgan_fingerprints.csv"
+    },
+    "rdkit_descriptors": {
+      "bytes": 6347128,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/rdkit_descriptors.parquet"
+    },
+    "rdkit_descriptors_csv": {
+      "bytes": 27408348,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/rdkit_descriptors.csv"
+    }
+  },
+  "primary_benchmark_molecules": 8969,
+  "rdkit_version": "2026.03.6",
+  "representations": {
+    "maccs_keys": {
+      "bit_density": 0.1920654711796566,
+      "n_bits": 167,
+      "rows": 13572
+    },
+    "morgan_fingerprint": {
+      "bit_density": 0.013906733532272326,
+      "diameter": 4,
+      "include_chirality": true,
+      "n_bits": 2048,
+      "radius": 2,
+      "rows": 13572
+    },
+    "rdkit_2d_descriptors": {
+      "constant_descriptor_count": 2,
+      "constant_descriptors": [
+        "SMR_VSA8",
+        "SlogP_VSA9"
+      ],
+      "descriptor_columns": 217,
+      "descriptors_with_missing_values": {
+        "BCUT2D_CHGHI": 162,
+        "BCUT2D_CHGLO": 162,
+        "BCUT2D_LOGPHI": 162,
+        "BCUT2D_LOGPLOW": 162,
+        "BCUT2D_MRHI": 162,
+        "BCUT2D_MRLOW": 162,
+        "BCUT2D_MWHI": 162,
+        "BCUT2D_MWLOW": 162,
+        "MaxAbsPartialCharge": 77,
+        "MaxPartialCharge": 77,
+        "MinAbsPartialCharge": 76,
+        "MinPartialCharge": 76,
+        "SPS": 1
+      },
+      "missing_values": 1603,
+      "rows": 13572
+    }
+  },
+  "status": "pass"
+}
