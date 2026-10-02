@@ -1,0 +1,93 @@
+{
+  "blocking_errors": [],
+  "completed_runs": 180,
+  "current_limitation": "The table contains 15 correlated tasks from one master benchmark. It is suitable for exploratory analysis and pipeline validation, not a final publishable meta-model. Source-holdout and external-dataset tasks must be added.",
+  "distinct_tasks": 15,
+  "failure_thresholds_log_s": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "meta_dataset_rows": 180,
+  "meta_descriptors": [
+    "MolWt",
+    "MolLogP",
+    "TPSA",
+    "FractionCSP3",
+    "NumRotatableBonds",
+    "RingCount"
+  ],
+  "molecule_summary_excludes_dummy": true,
+  "molecules_with_held_out_predictions": 6346,
+  "outcome_columns": 20,
+  "output_files": {
+    "failure_group_summary_csv": {
+      "bytes": 6007,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/failure_group_summary.csv"
+    },
+    "meta_dataset_dictionary_csv": {
+      "bytes": 10422,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/reports/meta_dataset_dictionary.csv"
+    },
+    "meta_model_dataset_csv": {
+      "bytes": 264472,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset.csv"
+    },
+    "meta_model_dataset_parquet": {
+      "bytes": 100165,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset.parquet"
+    },
+    "molecule_failure_summary_csv": {
+      "bytes": 1748369,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/molecule_failure_summary.csv"
+    },
+    "molecule_failure_summary_parquet": {
+      "bytes": 536369,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/molecule_failure_summary.parquet"
+    },
+    "prediction_failures_csv": {
+      "bytes": 50888213,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/prediction_failures.csv"
+    },
+    "prediction_failures_parquet": {
+      "bytes": 6249420,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/prediction_failures.parquet"
+    },
+    "run_failure_summary_csv": {
+      "bytes": 60781,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/run_failure_summary.csv"
+    },
+    "run_failure_summary_parquet": {
+      "bytes": 29532,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/run_failure_summary.parquet"
+    }
+  },
+  "prediction_rows": 161460,
+  "predictor_columns": 73,
+  "predictor_leakage_policy": "All x_ columns are available before final test evaluation. Test-molecule structure and train-test chemical similarity may be used, but no held-out test logS value or test-error statistic is included in X.",
+  "primary_failure_threshold_log_s": 1.0,
+  "primary_threshold_interpretation": "An absolute error above 1.0 log10(mol/L) corresponds to a solubility error larger than one order of magnitude. Thresholds 0.5 and 2.0 are retained for sensitivity analysis.",
+  "q_i_definition": "q_i = 1 when absolute(true_log_s - predicted_log_s) is strictly greater than 1 logS; otherwise q_i = 0.",
+  "recommended_initial_predictors": [
+    "x_model",
+    "x_feature_type",
+    "x_split_strategy",
+    "x_features_after_preprocessing",
+    "x_validation_rmse",
+    "x_fit_molecules",
+    "x_fit_scaffold_count",
+    "x_fit_log_s_std",
+    "x_fit_log_s_iqr",
+    "x_test_unseen_scaffold_fraction",
+    "x_test_max_train_similarity_median",
+    "x_test_max_train_similarity_p10",
+    "x_shift_mol_wt_smd",
+    "x_shift_mol_log_p_smd",
+    "x_shift_tpsa_smd",
+    "x_shift_fraction_csp3_smd"
+  ],
+  "selection_eligible_rows": 135,
+  "selection_outcome_policy": "Dummy regressors are retained as baselines but selection_eligible is false. Among eligible candidates, y_top3_candidate identifies the three lowest test-RMSE rows within each task, and y_rmse_regret_vs_best measures distance from the task winner.",
+  "status": "pass",
+  "validation_policy": "Future meta-model evaluation must hold out complete tasks or datasets. Randomly splitting the 180 run rows would leak repeated task-level meta-features."
+}

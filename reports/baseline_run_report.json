@@ -1,0 +1,62 @@
+{
+  "completed_runs": 180,
+  "failed_runs": [],
+  "failure_label_policy": "No binary success/failure labels are created at this stage; molecule-level residuals are retained for evidence-based failure definitions.",
+  "final_fit_policy": "After selection, preprocessing and the model are refit on training plus validation; the test partition is evaluated once.",
+  "output_files": {
+    "hyperparameter_results_csv": {
+      "bytes": 101132,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.csv"
+    },
+    "hyperparameter_results_parquet": {
+      "bytes": 27211,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.parquet"
+    },
+    "model_results_csv": {
+      "bytes": 66537,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.csv"
+    },
+    "model_results_parquet": {
+      "bytes": 30705,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.parquet"
+    },
+    "test_predictions_csv": {
+      "bytes": 44494307,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.csv"
+    },
+    "test_predictions_parquet": {
+      "bytes": 6096888,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.parquet"
+    }
+  },
+  "requested_feature_types": [
+    "rdkit_descriptors",
+    "morgan_fingerprints",
+    "maccs_fingerprints"
+  ],
+  "requested_models": [
+    "dummy",
+    "ridge",
+    "random_forest",
+    "extra_trees"
+  ],
+  "requested_repeats": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "requested_strategies": [
+    "random",
+    "scaffold",
+    "low_similarity"
+  ],
+  "residual_definition": "true_log_s - predicted_log_s",
+  "scikit_learn_version": "1.9.1",
+  "selection_policy": "Minimum validation RMSE, with validation MAE as the tie-breaker.",
+  "skipped_runs": [],
+  "status": "pass",
+  "test_prediction_rows": 161460,
+  "tuning_candidate_rows": 540
+}

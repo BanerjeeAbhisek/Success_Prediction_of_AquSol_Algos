@@ -1,0 +1,52 @@
+metric,value
+status,pass
+heldout_sources,AQUA
+heldout_sources,AqSolDB
+heldout_sources,Delaney
+heldout_sources,OCHEM
+heldout_sources,PHYSPROP
+task_count,25
+completed_runs,300
+prediction_rows,1198440
+tuning_candidate_rows,900
+source_meta_rows,300
+combined_meta_rows,480
+combined_distinct_tasks,40
+requested_models,dummy
+requested_models,ridge
+requested_models,random_forest
+requested_models,extra_trees
+requested_feature_types,rdkit_descriptors
+requested_feature_types,morgan_fingerprints
+requested_feature_types,maccs_fingerprints
+failed_runs,[]
+skipped_runs,[]
+prediction_storage_policy,Molecule-level source-holdout predictions and q_i labels are stored in one compressed Parquet file. A CSV copy is intentionally omitted because the estimated size exceeds GitHub's 100 MB per-file limit.
+meta_validation_policy,Do not randomly split combined meta rows. Hold out complete heldout_source groups when evaluating generalization across datasets.
+remaining_limitation,"The five source datasets overlap in chemical content. Molecule leakage is blocked within every task, but genuinely external datasets are still needed for the final publication claim."
+output_files.source_model_results_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_model_results.csv
+output_files.source_model_results_csv.bytes,127896
+output_files.source_model_results_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_model_results.parquet
+output_files.source_model_results_parquet.bytes,41323
+output_files.source_predictions_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_prediction_failures.parquet
+output_files.source_predictions_parquet.bytes,44020562
+output_files.source_tuning_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_hyperparameter_results.csv
+output_files.source_tuning_csv.bytes,208513
+output_files.source_tuning_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_hyperparameter_results.parquet
+output_files.source_tuning_parquet.bytes,42993
+output_files.source_run_summary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_run_failure_summary.csv
+output_files.source_run_summary_csv.bytes,117875
+output_files.source_run_summary_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_run_failure_summary.parquet
+output_files.source_run_summary_parquet.bytes,41308
+output_files.source_group_summary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_failure_group_summary.csv
+output_files.source_group_summary_csv.bytes,10782
+output_files.source_meta_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/source_holdout_meta_model_dataset.csv
+output_files.source_meta_csv.bytes,455436
+output_files.source_meta_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/source_holdout_meta_model_dataset.parquet
+output_files.source_meta_parquet.bytes,115052
+output_files.combined_meta_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset_with_source_holdouts.csv
+output_files.combined_meta_csv.bytes,724700
+output_files.combined_meta_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset_with_source_holdouts.parquet
+output_files.combined_meta_parquet.bytes,148548
+output_files.combined_dictionary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/reports/meta_dataset_with_source_holdouts_dictionary.csv
+output_files.combined_dictionary_csv.bytes,10640

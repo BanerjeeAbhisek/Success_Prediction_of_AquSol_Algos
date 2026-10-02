@@ -26,6 +26,11 @@ dev = [
 aquasol-build-master = "aquasol_meta.build_master:main"
 aquasol-build-targets = "aquasol_meta.build_targets:main"
 aquasol-build-features = "aquasol_meta.build_features:main"
+aquasol-build-splits = "aquasol_meta.build_splits:main"
+aquasol-run-baselines = "aquasol_meta.run_baselines:main"
+aquasol-build-meta-dataset = "aquasol_meta.build_failure_meta:main"
+aquasol-build-source-holdouts = "aquasol_meta.build_source_holdouts:main"
+aquasol-run-source-holdouts = "aquasol_meta.run_source_holdouts:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

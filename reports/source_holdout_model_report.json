@@ -1,0 +1,87 @@
+{
+  "combined_distinct_tasks": 40,
+  "combined_meta_rows": 480,
+  "completed_runs": 300,
+  "failed_runs": [],
+  "heldout_sources": [
+    "AQUA",
+    "AqSolDB",
+    "Delaney",
+    "OCHEM",
+    "PHYSPROP"
+  ],
+  "meta_validation_policy": "Do not randomly split combined meta rows. Hold out complete heldout_source groups when evaluating generalization across datasets.",
+  "output_files": {
+    "combined_dictionary_csv": {
+      "bytes": 10640,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/reports/meta_dataset_with_source_holdouts_dictionary.csv"
+    },
+    "combined_meta_csv": {
+      "bytes": 724700,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset_with_source_holdouts.csv"
+    },
+    "combined_meta_parquet": {
+      "bytes": 148548,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset_with_source_holdouts.parquet"
+    },
+    "source_group_summary_csv": {
+      "bytes": 10782,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_failure_group_summary.csv"
+    },
+    "source_meta_csv": {
+      "bytes": 455436,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/source_holdout_meta_model_dataset.csv"
+    },
+    "source_meta_parquet": {
+      "bytes": 115052,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/source_holdout_meta_model_dataset.parquet"
+    },
+    "source_model_results_csv": {
+      "bytes": 127896,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_model_results.csv"
+    },
+    "source_model_results_parquet": {
+      "bytes": 41323,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_model_results.parquet"
+    },
+    "source_predictions_parquet": {
+      "bytes": 44020562,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_prediction_failures.parquet"
+    },
+    "source_run_summary_csv": {
+      "bytes": 117875,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_run_failure_summary.csv"
+    },
+    "source_run_summary_parquet": {
+      "bytes": 41308,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_run_failure_summary.parquet"
+    },
+    "source_tuning_csv": {
+      "bytes": 208513,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_hyperparameter_results.csv"
+    },
+    "source_tuning_parquet": {
+      "bytes": 42993,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_hyperparameter_results.parquet"
+    }
+  },
+  "prediction_rows": 1198440,
+  "prediction_storage_policy": "Molecule-level source-holdout predictions and q_i labels are stored in one compressed Parquet file. A CSV copy is intentionally omitted because the estimated size exceeds GitHub's 100 MB per-file limit.",
+  "remaining_limitation": "The five source datasets overlap in chemical content. Molecule leakage is blocked within every task, but genuinely external datasets are still needed for the final publication claim.",
+  "requested_feature_types": [
+    "rdkit_descriptors",
+    "morgan_fingerprints",
+    "maccs_fingerprints"
+  ],
+  "requested_models": [
+    "dummy",
+    "ridge",
+    "random_forest",
+    "extra_trees"
+  ],
+  "skipped_runs": [],
+  "source_meta_rows": 300,
+  "status": "pass",
+  "task_count": 25,
+  "tuning_candidate_rows": 900
+}

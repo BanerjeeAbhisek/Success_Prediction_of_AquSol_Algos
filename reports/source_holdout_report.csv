@@ -1,0 +1,68 @@
+metric,value
+status,pass
+blocking_errors,[]
+heldout_sources,AQUA
+heldout_sources,AqSolDB
+heldout_sources,Delaney
+heldout_sources,OCHEM
+heldout_sources,PHYSPROP
+source_count,5
+repeats,5
+seeds,13
+seeds,37
+seeds,73
+seeds,101
+seeds,137
+task_count,25
+manifest_rows,259880
+source_target_counts.AQUA.heldout_source_rows,1311
+source_target_counts.AQUA.heldout_standardized_molecules,1302
+source_target_counts.AQUA.test_targets_before_primary_filter,1302
+source_target_counts.AQUA.test_targets,1302
+source_target_counts.AQUA.test_targets_excluded_for_conflict,0
+source_target_counts.AQUA.test_targets_excluded_outside_review_range,0
+source_target_counts.AQUA.fit_targets_before_primary_filter,12270
+source_target_counts.AQUA.fit_targets,8659
+source_target_counts.AqSolDB.heldout_source_rows,9982
+source_target_counts.AqSolDB.heldout_standardized_molecules,9560
+source_target_counts.AqSolDB.test_targets_before_primary_filter,9560
+source_target_counts.AqSolDB.test_targets,9434
+source_target_counts.AqSolDB.test_targets_excluded_for_conflict,126
+source_target_counts.AqSolDB.test_targets_excluded_outside_review_range,0
+source_target_counts.AqSolDB.fit_targets_before_primary_filter,4012
+source_target_counts.AqSolDB.fit_targets,3170
+source_target_counts.Delaney.heldout_source_rows,1128
+source_target_counts.Delaney.heldout_standardized_molecules,1117
+source_target_counts.Delaney.test_targets_before_primary_filter,1117
+source_target_counts.Delaney.test_targets,1116
+source_target_counts.Delaney.test_targets_excluded_for_conflict,1
+source_target_counts.Delaney.test_targets_excluded_outside_review_range,0
+source_target_counts.Delaney.fit_targets_before_primary_filter,12455
+source_target_counts.Delaney.fit_targets,8697
+source_target_counts.OCHEM.heldout_source_rows,36449
+source_target_counts.OCHEM.heldout_standardized_molecules,10577
+source_target_counts.OCHEM.test_targets_before_primary_filter,10575
+source_target_counts.OCHEM.test_targets,6112
+source_target_counts.OCHEM.test_targets_excluded_for_conflict,4179
+source_target_counts.OCHEM.test_targets_excluded_outside_review_range,285
+source_target_counts.OCHEM.fit_targets_before_primary_filter,2996
+source_target_counts.OCHEM.fit_targets,2934
+source_target_counts.PHYSPROP.heldout_source_rows,2010
+source_target_counts.PHYSPROP.heldout_standardized_molecules,2010
+source_target_counts.PHYSPROP.test_targets_before_primary_filter,2010
+source_target_counts.PHYSPROP.test_targets,2010
+source_target_counts.PHYSPROP.test_targets_excluded_for_conflict,0
+source_target_counts.PHYSPROP.test_targets_excluded_outside_review_range,0
+source_target_counts.PHYSPROP.fit_targets_before_primary_filter,11562
+source_target_counts.PHYSPROP.fit_targets,8542
+test_target_policy,"Test targets are medians of model-eligible observations from the held-out source only, followed by the established conflict and review-range filters."
+fit_target_policy,Fit targets are rebuilt after removing the held-out source and every molecule that appears in that source. No held-out-source molecule can enter training or validation.
+validation_policy,The non-held-out target pool is split 90/10 into train and validation using logS quantile stratification and five fixed seeds. The held-out-source test set remains fixed across repeats.
+similarity_policy,Maximum Morgan radius-2 Tanimoto similarity is computed against the training partition for every validation and test molecule.
+known_dependence,"Some source datasets share many molecules. Cross-source molecule leakage is blocked within each task, but source-holdout tasks are still correlated and do not replace evaluation on genuinely external datasets."
+output_files.source_holdout_tasks_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/source_holdout_tasks.csv
+output_files.source_holdout_tasks_csv.bytes,53220214
+output_files.source_holdout_tasks_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/source_holdout_tasks.parquet
+output_files.source_holdout_tasks_parquet.bytes,1745015
+output_files.source_holdout_summary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/reports/source_holdout_summary.csv
+output_files.source_holdout_summary_csv.bytes,4272

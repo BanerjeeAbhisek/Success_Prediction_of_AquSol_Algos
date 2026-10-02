@@ -1,0 +1,101 @@
+column,role,uses_test_log_s,available_before_test_evaluation,recommended_for_initial_meta_model,description
+run_id,identifier_or_filter,False,True,False,Unique fitted-model run identifier.
+task_id,identifier_or_filter,False,True,False,Chemical evaluation task: split strategy and repeat.
+heldout_source,identifier_or_filter,False,True,False,Dataset-level grouping variable for source-holdout evaluation.
+repeat,identifier_or_filter,False,True,False,Audit-only repeat number; do not use as a scientific predictor.
+seed,identifier_or_filter,False,True,False,Audit-only random seed; do not use as a scientific predictor.
+selection_eligible,identifier_or_filter,False,True,False,True for substantive model candidates; false for dummy baselines.
+x_evaluation_design,predictor,False,True,False,Evaluation design used to construct the chemical task.
+x_feature_type,predictor,False,True,True,Molecular representation supplied to the regression model.
+x_features_after_preprocessing,predictor,False,True,True,Modeling sample-size or representation-size predictor.
+x_features_before_preprocessing,predictor,False,True,False,Modeling sample-size or representation-size predictor.
+x_fit_fraction_csp3_mean,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_fraction_csp3_std,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_log_s_iqr,predictor,False,True,True,Solubility-target summary from the final fitting data only.
+x_fit_log_s_max,predictor,False,True,False,Solubility-target summary from the final fitting data only.
+x_fit_log_s_mean,predictor,False,True,False,Solubility-target summary from the final fitting data only.
+x_fit_log_s_median,predictor,False,True,False,Solubility-target summary from the final fitting data only.
+x_fit_log_s_min,predictor,False,True,False,Solubility-target summary from the final fitting data only.
+x_fit_log_s_std,predictor,False,True,True,Solubility-target summary from the final fitting data only.
+x_fit_mean_observation_count,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_mol_log_p_mean,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_mol_log_p_std,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_mol_wt_mean,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_mol_wt_std,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_molecules,predictor,False,True,True,Training-plus-validation composition or chemistry summary.
+x_fit_multiple_source_fraction,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_ring_count_mean,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_ring_count_std,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_rotatable_bonds_mean,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_rotatable_bonds_std,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_scaffold_count,predictor,False,True,True,Training-plus-validation composition or chemistry summary.
+x_fit_single_observation_fraction,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_tpsa_mean,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_fit_tpsa_std,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_hp_alpha,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_max_features,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_min_samples_leaf,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_n_estimators,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_strategy,predictor,False,True,False,Validation-selected model hyperparameter.
+x_model,predictor,False,True,True,Candidate regression algorithm.
+x_model_class,predictor,False,True,False,Broad algorithm family.
+x_n_final_fit,predictor,False,True,False,Modeling sample-size or representation-size predictor.
+x_n_test,predictor,False,True,False,Modeling sample-size or representation-size predictor.
+x_n_train,predictor,False,True,False,Modeling sample-size or representation-size predictor.
+x_n_validation,predictor,False,True,False,Modeling sample-size or representation-size predictor.
+x_shift_fraction_csp3_smd,predictor,False,True,True,Standardized train-to-test chemical descriptor shift.
+x_shift_mol_log_p_smd,predictor,False,True,True,Standardized train-to-test chemical descriptor shift.
+x_shift_mol_wt_smd,predictor,False,True,True,Standardized train-to-test chemical descriptor shift.
+x_shift_ring_count_smd,predictor,False,True,False,Standardized train-to-test chemical descriptor shift.
+x_shift_rotatable_bonds_smd,predictor,False,True,False,Standardized train-to-test chemical descriptor shift.
+x_shift_tpsa_smd,predictor,False,True,True,Standardized train-to-test chemical descriptor shift.
+x_split_strategy,predictor,False,True,True,"Known evaluation condition: random, scaffold, or low similarity."
+x_test_fraction_csp3_mean,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_fraction_csp3_std,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_max_train_similarity_max,predictor,False,True,False,Structure-only test-to-training chemical similarity summary.
+x_test_max_train_similarity_mean,predictor,False,True,False,Structure-only test-to-training chemical similarity summary.
+x_test_max_train_similarity_median,predictor,False,True,True,Structure-only test-to-training chemical similarity summary.
+x_test_max_train_similarity_min,predictor,False,True,False,Structure-only test-to-training chemical similarity summary.
+x_test_max_train_similarity_p10,predictor,False,True,True,Structure-only test-to-training chemical similarity summary.
+x_test_max_train_similarity_p25,predictor,False,True,False,Structure-only test-to-training chemical similarity summary.
+x_test_max_train_similarity_std,predictor,False,True,False,Structure-only test-to-training chemical similarity summary.
+x_test_mol_log_p_mean,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_mol_log_p_std,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_mol_wt_mean,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_mol_wt_std,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_molecules,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_ring_count_mean,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_ring_count_std,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_rotatable_bonds_mean,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_rotatable_bonds_std,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_scaffold_count,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_similarity_below_0p3_fraction,predictor,False,True,False,Structure-only test-to-training chemical similarity summary.
+x_test_similarity_below_0p5_fraction,predictor,False,True,False,Structure-only test-to-training chemical similarity summary.
+x_test_similarity_below_0p7_fraction,predictor,False,True,False,Structure-only test-to-training chemical similarity summary.
+x_test_tpsa_mean,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_tpsa_std,predictor,False,True,False,Structure-only held-out chemical descriptor summary; no test logS used.
+x_test_unseen_scaffold_fraction,predictor,False,True,True,Structure-only held-out chemical descriptor summary; no test logS used.
+x_validation_mae,predictor,False,True,False,Validation-set performance available before final test evaluation.
+x_validation_r2,predictor,False,True,False,Validation-set performance available before final test evaluation.
+x_validation_rmse,predictor,False,True,True,Validation-set performance available before final test evaluation.
+x_validation_spearman,predictor,False,True,False,Validation-set performance available before final test evaluation.
+y_failure_rate_gt_0p5,outcome,True,False,False,Held-out molecule failure rate at the named absolute-error threshold.
+y_failure_rate_gt_1p0,outcome,True,False,False,Held-out molecule failure rate at the named absolute-error threshold.
+y_failure_rate_gt_2p0,outcome,True,False,False,Held-out molecule failure rate at the named absolute-error threshold.
+y_maximum_absolute_error,outcome,True,False,False,Held-out prediction-error outcome.
+y_mean_residual,outcome,True,False,False,Held-out prediction-error outcome.
+y_median_absolute_error,outcome,True,False,False,Held-out prediction-error outcome.
+y_overprediction_rate,outcome,True,False,False,Held-out prediction-error outcome.
+y_p90_absolute_error,outcome,True,False,False,Held-out prediction-error outcome.
+y_p95_absolute_error,outcome,True,False,False,Held-out prediction-error outcome.
+y_primary_failure_rate,outcome,True,False,False,Fraction of held-out molecules with absolute error above 1.0 logS.
+y_rank_within_task,outcome,True,False,False,Held-out prediction-error outcome.
+y_residual_sd,outcome,True,False,False,Held-out prediction-error outcome.
+y_rmse_regret_vs_best,outcome,True,False,False,Candidate test RMSE minus the best eligible RMSE in the same task.
+y_test_mae,outcome,True,False,False,Held-out regression performance outcome.
+y_test_r2,outcome,True,False,False,Held-out regression performance outcome.
+y_test_rmse,outcome,True,False,False,Held-out regression performance outcome.
+y_test_spearman,outcome,True,False,False,Held-out regression performance outcome.
+y_top3_candidate,outcome,True,False,False,Binary outcome: candidate ranks among the three lowest test RMSE values in its task.
+y_underprediction_rate,outcome,True,False,False,Held-out prediction-error outcome.
+y_within_0p1_log_s_of_best,outcome,True,False,False,Binary outcome: test RMSE is within 0.1 logS of the task winner.

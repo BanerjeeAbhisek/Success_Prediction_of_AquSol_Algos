@@ -133,6 +133,117 @@ Parquet is recommended for Python model fitting because it is smaller and preser
 Use the CSV copies for inspection or software that cannot read Parquet. Add `--no-csv` when only
 the compact Parquet outputs are needed.
 
+## Build fixed benchmark splits
+
+After feature generation, create the reproducible split manifest with:
+
+```bash
+aquasol-build-splits
+```
+
+This creates `data_processed/split_assignments.csv` and `.parquet` with five repeats of three
+strategies: logS-stratified random splitting, Murcko-scaffold group splitting, and a deliberately
+low-similarity challenge split. Each strategy targets 80% training, 10% validation, and 10% testing.
+Validation and test rows record their maximum radius-2 Morgan Tanimoto similarity to the matching
+training set. Training rows leave this field missing because self-similarity is not informative.
+
+Scaffold groups never cross partitions. Molecules without a ring scaffold use an explicitly
+documented acyclic-singleton policy, avoiding one unusably large empty-scaffold group. Split counts,
+target distributions, scaffold counts, and similarity distributions are written to
+`reports/split_quality.csv` and `.json`.
+
+The manifest contains no logS response. Join it to targets and features by `molecule_id` only when
+running a specified strategy and repeat. Source-holdout evaluation remains a separate task because
+it requires source-specific target construction to avoid using held-out measurements.
+
+## Run baseline models
+
+The default command runs the initial smoke test on random split repeat 1, using all three feature
+representations and the four core models (Dummy, Ridge, Random Forest, and Extra Trees):
+
+```bash
+aquasol-run-baselines
+```
+
+For every model/feature/split/repeat combination, candidate settings are selected by validation
+RMSE. The selected preprocessing and model are then refit on training plus validation, and the test
+partition is evaluated once. Descriptor imputation, variance filtering, and scaling are fitted
+inside the relevant training pipeline rather than on the complete dataset.
+
+The raw RDKit `Ipc` descriptor is excluded from model fitting because its exponential magnitude
+reaches approximately (10^{100}) in this collection and cannot be represented by the `float32`
+arrays used by tree models. The normalized `AvgIpc` descriptor remains available. This fixed,
+label-independent rule is applied consistently to every split.
+
+The command writes model-level metrics, molecule-level test residuals, and validation candidate
+results to `results/` in CSV and Parquet formats. The run report is written to `reports/` as both
+JSON and a long-form `metric,value` CSV. It does not create binary failure labels.
+
+After reviewing the smoke test, run all fixed split strategies and repeats with the core models:
+
+```bash
+aquasol-run-baselines \
+  --strategies random scaffold low_similarity \
+  --repeats 1 2 3 4 5
+```
+
+To run only the advanced models after checking their runtime and convergence, pass
+`--models hist_gradient_boosting svr mlp`. To retain the core models too, list all seven model
+names. HistGradientBoosting is restricted to the compact RDKit descriptor representation.
+
+## Characterize failures and build the meta-dataset
+
+After the complete baseline grid finishes, run:
+
+```bash
+aquasol-build-meta-dataset
+```
+
+The primary molecule-level failure indicator is
+`q_i = 1(abs(true_log_s - predicted_log_s) > 1.0)`. One logS unit corresponds to a tenfold
+solubility error. Companion indicators at 0.5 and 2.0 logS support sensitivity analysis; the raw
+signed and absolute errors remain available.
+
+This command produces molecule-level failure labels, one failure-summary row per fitted model, an
+across-repeat summary, and `data_processed/meta_model_dataset.*`. In the meta-dataset, columns
+beginning with `x_` are available before final test evaluation, while columns beginning with `y_`
+are held-out outcomes. Test-set molecular structures and train-test similarity are valid `x_`
+inputs; held-out test logS values and errors are never included in `x_`.
+
+The dummy models are retained for comparison but have `selection_eligible = false`. For substantive
+candidates, `y_top3_candidate` is the binary model-selection outcome and
+`y_rmse_regret_vs_best` measures continuous distance from the task winner. Do not randomly split
+meta-dataset rows: hold out complete `task_id` groups, and ultimately complete external datasets.
+
+The current 180-row table represents 15 correlated tasks from one master benchmark. It validates
+the failure-analysis pipeline but is not sufficient for the final publishable meta-model. Add
+source-holdout and external-dataset tasks before training the definitive model selector.
+
+## Add source-holdout tasks
+
+Build source-specific targets and assignments with:
+
+```bash
+aquasol-build-source-holdouts
+```
+
+For each held-out source, the test target is reconstructed exclusively from that source. Every
+molecule appearing in the held-out source is removed from training and validation, even if the same
+structure occurs in another source. Targets for the fitting pool are then rebuilt using only the
+remaining observations. Five fixed 90/10 training/validation splits are created while the source
+test set remains fixed.
+
+Run the core model grid over the source tasks with:
+
+```bash
+aquasol-run-source-holdouts
+```
+
+This creates source-level results and a combined meta-dataset. Molecule-level source predictions
+are Parquet-only because an equivalent CSV would exceed GitHub's 100 MB per-file limit. Evaluate
+the meta-model by holding out complete `heldout_source` groups. The source datasets share many
+molecules, so genuinely external datasets are still required for the strongest publication claim.
+
 ## Run tests
 
 ```bash
@@ -147,8 +258,10 @@ out complete experimental sources or carefully defined chemical tasks.
 
 ## Current scope
 
-This stage prepares and audits the data, encodes a transparent first target-resolution policy, and
-generates reproducible structure-derived features. The next stage will calculate leakage-safe
-train/test splits.
+This stage prepares and audits the data, encodes a transparent first target-resolution policy,
+generates reproducible structure-derived features, fixes leakage-checked benchmark splits, runs the
+complete core baseline grid, constructs molecule- and run-level failure tables, and supports strict
+source-holdout evaluation. Genuinely external-dataset tasks remain necessary before definitive
+meta-model training.
 Measurement-condition and provenance columns remain audit variables unless a specifically defined
 conditional-solubility task makes them available at prediction time.

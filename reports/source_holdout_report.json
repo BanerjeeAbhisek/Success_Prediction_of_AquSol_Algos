@@ -1,0 +1,93 @@
+{
+  "blocking_errors": [],
+  "fit_target_policy": "Fit targets are rebuilt after removing the held-out source and every molecule that appears in that source. No held-out-source molecule can enter training or validation.",
+  "heldout_sources": [
+    "AQUA",
+    "AqSolDB",
+    "Delaney",
+    "OCHEM",
+    "PHYSPROP"
+  ],
+  "known_dependence": "Some source datasets share many molecules. Cross-source molecule leakage is blocked within each task, but source-holdout tasks are still correlated and do not replace evaluation on genuinely external datasets.",
+  "manifest_rows": 259880,
+  "output_files": {
+    "source_holdout_summary_csv": {
+      "bytes": 4272,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/reports/source_holdout_summary.csv"
+    },
+    "source_holdout_tasks_csv": {
+      "bytes": 53220214,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/source_holdout_tasks.csv"
+    },
+    "source_holdout_tasks_parquet": {
+      "bytes": 1745015,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/source_holdout_tasks.parquet"
+    }
+  },
+  "repeats": 5,
+  "seeds": [
+    13,
+    37,
+    73,
+    101,
+    137
+  ],
+  "similarity_policy": "Maximum Morgan radius-2 Tanimoto similarity is computed against the training partition for every validation and test molecule.",
+  "source_count": 5,
+  "source_target_counts": {
+    "AQUA": {
+      "fit_targets": 8659,
+      "fit_targets_before_primary_filter": 12270,
+      "heldout_source_rows": 1311,
+      "heldout_standardized_molecules": 1302,
+      "test_targets": 1302,
+      "test_targets_before_primary_filter": 1302,
+      "test_targets_excluded_for_conflict": 0,
+      "test_targets_excluded_outside_review_range": 0
+    },
+    "AqSolDB": {
+      "fit_targets": 3170,
+      "fit_targets_before_primary_filter": 4012,
+      "heldout_source_rows": 9982,
+      "heldout_standardized_molecules": 9560,
+      "test_targets": 9434,
+      "test_targets_before_primary_filter": 9560,
+      "test_targets_excluded_for_conflict": 126,
+      "test_targets_excluded_outside_review_range": 0
+    },
+    "Delaney": {
+      "fit_targets": 8697,
+      "fit_targets_before_primary_filter": 12455,
+      "heldout_source_rows": 1128,
+      "heldout_standardized_molecules": 1117,
+      "test_targets": 1116,
+      "test_targets_before_primary_filter": 1117,
+      "test_targets_excluded_for_conflict": 1,
+      "test_targets_excluded_outside_review_range": 0
+    },
+    "OCHEM": {
+      "fit_targets": 2934,
+      "fit_targets_before_primary_filter": 2996,
+      "heldout_source_rows": 36449,
+      "heldout_standardized_molecules": 10577,
+      "test_targets": 6112,
+      "test_targets_before_primary_filter": 10575,
+      "test_targets_excluded_for_conflict": 4179,
+      "test_targets_excluded_outside_review_range": 285
+    },
+    "PHYSPROP": {
+      "fit_targets": 8542,
+      "fit_targets_before_primary_filter": 11562,
+      "heldout_source_rows": 2010,
+      "heldout_standardized_molecules": 2010,
+      "test_targets": 2010,
+      "test_targets_before_primary_filter": 2010,
+      "test_targets_excluded_for_conflict": 0,
+      "test_targets_excluded_outside_review_range": 0
+    }
+  },
+  "status": "pass",
+  "task_count": 25,
+  "test_target_policy": "Test targets are medians of model-eligible observations from the held-out source only, followed by the established conflict and review-range filters.",
+  "validation_policy": "The non-held-out target pool is split 90/10 into train and validation using logS quantile stratification and five fixed seeds. The held-out-source test set remains fixed across repeats."
+}

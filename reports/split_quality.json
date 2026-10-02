@@ -1,0 +1,44 @@
+{
+  "blocking_errors": [],
+  "low_similarity_policy": "A provisional 70% training set is sampled; the lowest-similarity 10% and next-lowest 10% become test and validation, and the remaining 10% joins training. Similarity is Morgan radius-2 Tanimoto similarity and is recomputed against the final training set.",
+  "mean_of_repeat_test_median_similarity": {
+    "low_similarity": {
+      "max": 0.3953488372093023,
+      "mean": 0.3914751380446179,
+      "min": 0.3870967741935484
+    },
+    "random": {
+      "max": 0.59375,
+      "mean": 0.5878432311621966,
+      "min": 0.5833333333333334
+    },
+    "scaffold": {
+      "max": 0.47058823529411764,
+      "mean": 0.46130878924996577,
+      "min": 0.45454545454545453
+    }
+  },
+  "molecules_per_strategy_repeat": 8969,
+  "random_policy": "logS-quantile-stratified molecule split",
+  "repeats": 5,
+  "scaffold_policy": "Murcko scaffold groups remain intact; molecules without a ring scaffold are treated as acyclic singletons to avoid one oversized empty-scaffold group.",
+  "seeds": [
+    13,
+    37,
+    73,
+    101,
+    137
+  ],
+  "similarity_scope": "maximum_train_similarity is populated for validation/test molecules and left missing for training molecules.",
+  "status": "pass",
+  "strategies": [
+    "random",
+    "scaffold",
+    "low_similarity"
+  ],
+  "target_fractions": {
+    "test": 0.1,
+    "train": 0.8,
+    "validation": 0.1
+  }
+}
