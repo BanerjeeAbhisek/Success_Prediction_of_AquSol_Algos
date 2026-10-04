@@ -1,31 +1,31 @@
 {
-  "completed_runs": 180,
+  "completed_runs": 285,
   "failed_runs": [],
   "failure_label_policy": "No binary success/failure labels are created at this stage; molecule-level residuals are retained for evidence-based failure definitions.",
   "final_fit_policy": "After selection, preprocessing and the model are refit on training plus validation; the test partition is evaluated once.",
   "output_files": {
     "hyperparameter_results_csv": {
-      "bytes": 101132,
+      "bytes": 161937,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.csv"
     },
     "hyperparameter_results_parquet": {
-      "bytes": 27211,
+      "bytes": 41670,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.parquet"
     },
     "model_results_csv": {
-      "bytes": 66537,
+      "bytes": 105697,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.csv"
     },
     "model_results_parquet": {
-      "bytes": 30705,
+      "bytes": 40944,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.parquet"
     },
     "test_predictions_csv": {
-      "bytes": 44494307,
+      "bytes": 70067862,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.csv"
     },
     "test_predictions_parquet": {
-      "bytes": 6096888,
+      "bytes": 9594491,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.parquet"
     }
   },
@@ -38,7 +38,10 @@
     "dummy",
     "ridge",
     "random_forest",
-    "extra_trees"
+    "extra_trees",
+    "hist_gradient_boosting",
+    "svr",
+    "mlp"
   ],
   "requested_repeats": [
     1,
@@ -55,8 +58,129 @@
   "residual_definition": "true_log_s - predicted_log_s",
   "scikit_learn_version": "1.9.1",
   "selection_policy": "Minimum validation RMSE, with validation MAE as the tie-breaker.",
-  "skipped_runs": [],
+  "skipped_runs": [
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r1_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r2_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r3_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r4_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r5_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r1_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r2_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r3_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r4_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r5_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r1_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r2_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r3_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r4_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r5_morgan_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r1_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r2_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r3_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r4_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r5_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r1_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r2_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r3_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r4_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r5_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r1_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r2_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r3_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r4_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r5_maccs_fingerprints_hist_gradient_boosting"
+    }
+  ],
   "status": "pass",
-  "test_prediction_rows": 161460,
-  "tuning_candidate_rows": 540
+  "test_prediction_rows": 255645,
+  "tuning_candidate_rows": 855
 }

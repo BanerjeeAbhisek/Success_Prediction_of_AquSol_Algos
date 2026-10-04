@@ -30,8 +30,15 @@ x_fit_scaffold_count,predictor,False,True,True,Training-plus-validation composit
 x_fit_single_observation_fraction,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
 x_fit_tpsa_mean,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
 x_fit_tpsa_std,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
+x_hp_C,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_alpha,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_epsilon,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_gamma,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_hidden_layer_sizes,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_l2_regularization,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_learning_rate,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_max_features,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_max_leaf_nodes,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_min_samples_leaf,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_n_estimators,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_strategy,predictor,False,True,False,Validation-selected model hyperparameter.

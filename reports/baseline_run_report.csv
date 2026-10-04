@@ -1,39 +1,101 @@
 metric,value
-completed_runs,180
-failed_runs,[]
-failure_label_policy,No binary success/failure labels are created at this stage; molecule-level residuals are retained for evidence-based failure definitions.
-final_fit_policy,"After selection, preprocessing and the model are refit on training plus validation; the test partition is evaluated once."
-output_files.hyperparameter_results_csv.bytes,101132
-output_files.hyperparameter_results_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.csv
-output_files.hyperparameter_results_parquet.bytes,27211
-output_files.hyperparameter_results_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.parquet
-output_files.model_results_csv.bytes,66537
-output_files.model_results_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.csv
-output_files.model_results_parquet.bytes,30705
-output_files.model_results_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.parquet
-output_files.test_predictions_csv.bytes,44494307
-output_files.test_predictions_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.csv
-output_files.test_predictions_parquet.bytes,6096888
-output_files.test_predictions_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.parquet
+status,pass
+scikit_learn_version,1.9.1
 requested_feature_types,rdkit_descriptors
 requested_feature_types,morgan_fingerprints
 requested_feature_types,maccs_fingerprints
-requested_models,dummy
-requested_models,ridge
-requested_models,random_forest
-requested_models,extra_trees
+requested_strategies,random
+requested_strategies,scaffold
+requested_strategies,low_similarity
 requested_repeats,1
 requested_repeats,2
 requested_repeats,3
 requested_repeats,4
 requested_repeats,5
-requested_strategies,random
-requested_strategies,scaffold
-requested_strategies,low_similarity
-residual_definition,true_log_s - predicted_log_s
-scikit_learn_version,1.9.1
+requested_models,dummy
+requested_models,ridge
+requested_models,random_forest
+requested_models,extra_trees
+requested_models,hist_gradient_boosting
+requested_models,svr
+requested_models,mlp
+completed_runs,285
+test_prediction_rows,255645
+tuning_candidate_rows,855
+skipped_runs.0.run_id,random_r1_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.0.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.1.run_id,random_r2_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.1.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.2.run_id,random_r3_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.2.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.3.run_id,random_r4_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.3.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.4.run_id,random_r5_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.4.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.5.run_id,scaffold_r1_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.5.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.6.run_id,scaffold_r2_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.6.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.7.run_id,scaffold_r3_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.7.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.8.run_id,scaffold_r4_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.8.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.9.run_id,scaffold_r5_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.9.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.10.run_id,low_similarity_r1_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.10.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.11.run_id,low_similarity_r2_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.11.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.12.run_id,low_similarity_r3_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.12.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.13.run_id,low_similarity_r4_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.13.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.14.run_id,low_similarity_r5_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.14.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.15.run_id,random_r1_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.15.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.16.run_id,random_r2_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.16.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.17.run_id,random_r3_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.17.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.18.run_id,random_r4_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.18.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.19.run_id,random_r5_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.19.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.20.run_id,scaffold_r1_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.20.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.21.run_id,scaffold_r2_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.21.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.22.run_id,scaffold_r3_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.22.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.23.run_id,scaffold_r4_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.23.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.24.run_id,scaffold_r5_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.24.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.25.run_id,low_similarity_r1_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.25.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.26.run_id,low_similarity_r2_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.26.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.27.run_id,low_similarity_r3_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.27.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.28.run_id,low_similarity_r4_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.28.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.29.run_id,low_similarity_r5_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.29.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+failed_runs,[]
 selection_policy,"Minimum validation RMSE, with validation MAE as the tie-breaker."
-skipped_runs,[]
-status,pass
-test_prediction_rows,161460
-tuning_candidate_rows,540
+final_fit_policy,"After selection, preprocessing and the model are refit on training plus validation; the test partition is evaluated once."
+residual_definition,true_log_s - predicted_log_s
+failure_label_policy,No binary success/failure labels are created at this stage; molecule-level residuals are retained for evidence-based failure definitions.
+output_files.model_results_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.csv
+output_files.model_results_csv.bytes,105697
+output_files.model_results_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.parquet
+output_files.model_results_parquet.bytes,40944
+output_files.test_predictions_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.csv
+output_files.test_predictions_csv.bytes,70067862
+output_files.test_predictions_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.parquet
+output_files.test_predictions_parquet.bytes,9594491
+output_files.hyperparameter_results_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.csv
+output_files.hyperparameter_results_csv.bytes,161937
+output_files.hyperparameter_results_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.parquet
+output_files.hyperparameter_results_parquet.bytes,41670
