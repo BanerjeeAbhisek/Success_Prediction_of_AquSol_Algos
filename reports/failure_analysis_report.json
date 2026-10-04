@@ -1,6 +1,8 @@
 {
   "blocking_errors": [],
-  "completed_runs": 285,
+  "combined_meta_refreshed": true,
+  "combined_meta_rows": 940,
+  "completed_runs": 465,
   "current_limitation": "The table contains 15 correlated tasks from one master benchmark. It is suitable for exploratory analysis and pipeline validation, not a final publishable meta-model. Source-holdout and external-dataset tasks must be added.",
   "distinct_tasks": 15,
   "failure_thresholds_log_s": [
@@ -8,7 +10,7 @@
     1.0,
     2.0
   ],
-  "meta_dataset_rows": 285,
+  "meta_dataset_rows": 465,
   "meta_descriptors": [
     "MolWt",
     "MolLogP",
@@ -21,49 +23,61 @@
   "molecules_with_held_out_predictions": 6346,
   "outcome_columns": 20,
   "output_files": {
+    "combined_dictionary_csv": {
+      "bytes": 12635,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/reports/meta_dataset_with_source_holdouts_dictionary.csv"
+    },
+    "combined_meta_csv": {
+      "bytes": 1446335,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset_with_source_holdouts.csv"
+    },
+    "combined_meta_parquet": {
+      "bytes": 240535,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset_with_source_holdouts.parquet"
+    },
     "failure_group_summary_csv": {
-      "bytes": 9354,
+      "bytes": 15120,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/failure_group_summary.csv"
     },
     "meta_dataset_dictionary_csv": {
-      "bytes": 11022,
+      "bytes": 12417,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/reports/meta_dataset_dictionary.csv"
     },
     "meta_model_dataset_csv": {
-      "bytes": 421134,
+      "bytes": 696293,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset.csv"
     },
     "meta_model_dataset_parquet": {
-      "bytes": 121297,
+      "bytes": 160505,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset.parquet"
     },
     "molecule_failure_summary_csv": {
-      "bytes": 1633883,
+      "bytes": 1813692,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/molecule_failure_summary.csv"
     },
     "molecule_failure_summary_parquet": {
-      "bytes": 536008,
+      "bytes": 543939,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/molecule_failure_summary.parquet"
     },
-    "prediction_failures_csv": {
-      "bytes": 80182325,
-      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/prediction_failures.csv"
+    "prediction_failures_csv_gz": {
+      "bytes": 27286644,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/prediction_failures.csv.gz"
     },
     "prediction_failures_parquet": {
-      "bytes": 9831851,
+      "bytes": 14812003,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/prediction_failures.parquet"
     },
     "run_failure_summary_csv": {
-      "bytes": 95647,
+      "bytes": 155333,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/run_failure_summary.csv"
     },
     "run_failure_summary_parquet": {
-      "bytes": 38894,
+      "bytes": 54862,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/run_failure_summary.parquet"
     }
   },
-  "prediction_rows": 255645,
-  "predictor_columns": 80,
+  "prediction_rows": 417105,
+  "predictor_columns": 96,
   "predictor_leakage_policy": "All x_ columns are available before final test evaluation. Test-molecule structure and train-test chemical similarity may be used, but no held-out test logS value or test-error statistic is included in X.",
   "primary_failure_threshold_log_s": 1.0,
   "primary_threshold_interpretation": "An absolute error above 1.0 log10(mol/L) corresponds to a solubility error larger than one order of magnitude. Thresholds 0.5 and 2.0 are retained for sensitivity analysis.",
@@ -86,8 +100,8 @@
     "x_shift_tpsa_smd",
     "x_shift_fraction_csp3_smd"
   ],
-  "selection_eligible_rows": 240,
+  "selection_eligible_rows": 420,
   "selection_outcome_policy": "Dummy regressors are retained as baselines but selection_eligible is false. Among eligible candidates, y_top3_candidate identifies the three lowest test-RMSE rows within each task, and y_rmse_regret_vs_best measures distance from the task winner.",
   "status": "pass",
-  "validation_policy": "Future meta-model evaluation must hold out complete tasks or datasets. Randomly splitting the 180 run rows would leak repeated task-level meta-features."
+  "validation_policy": "Future meta-model evaluation must hold out complete tasks or datasets. Randomly splitting the 465 run rows would leak repeated task-level meta-features."
 }

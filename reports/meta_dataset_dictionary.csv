@@ -32,16 +32,32 @@ x_fit_tpsa_mean,predictor,False,True,False,Training-plus-validation composition 
 x_fit_tpsa_std,predictor,False,True,False,Training-plus-validation composition or chemistry summary.
 x_hp_C,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_alpha,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_architecture,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_batch_size,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_depth,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_dropout,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_early_stopping_patience,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_ensemble_size,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_epsilon,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_ffn_hidden_dim,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_ffn_num_layers,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_gamma,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_hidden_layer_sizes,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_l1_ratio,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_l2_regularization,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_learning_rate,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_max_depth,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_max_features,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_max_leaf_nodes,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_maximum_epochs,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_message_hidden_dim,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_min_child_weight,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_min_samples_leaf,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_minibatch_frac,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_n_estimators,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_n_neighbors,predictor,False,True,False,Validation-selected model hyperparameter.
 x_hp_strategy,predictor,False,True,False,Validation-selected model hyperparameter.
+x_hp_weights,predictor,False,True,False,Validation-selected model hyperparameter.
 x_model,predictor,False,True,True,Candidate regression algorithm.
 x_model_class,predictor,False,True,False,Broad algorithm family.
 x_n_final_fit,predictor,False,True,False,Modeling sample-size or representation-size predictor.

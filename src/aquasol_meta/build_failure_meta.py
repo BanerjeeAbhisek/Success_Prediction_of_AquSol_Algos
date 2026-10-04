@@ -20,6 +20,7 @@ from .failure_meta import (
     validate_failure_meta_outputs,
 )
 from .run_baselines import _flatten_report, _write_table
+from .run_source_holdouts import _combine_meta_datasets
 
 
 def build_failure_meta_artifacts(
@@ -66,7 +67,7 @@ def build_failure_meta_artifacts(
     )
 
     paths = {
-        "prediction_failures_csv": results_dir / "prediction_failures.csv",
+        "prediction_failures_csv_gz": results_dir / "prediction_failures.csv.gz",
         "prediction_failures_parquet": results_dir / "prediction_failures.parquet",
         "run_failure_summary_csv": results_dir / "run_failure_summary.csv",
         "run_failure_summary_parquet": results_dir / "run_failure_summary.parquet",
@@ -79,11 +80,31 @@ def build_failure_meta_artifacts(
         "failure_analysis_report_json": reports_dir / "failure_analysis_report.json",
         "failure_analysis_report_csv": reports_dir / "failure_analysis_report.csv",
     }
+    source_meta_path = data_dir / "source_holdout_meta_model_dataset.parquet"
+    combined_meta: pd.DataFrame | None = None
+    if source_meta_path.exists():
+        combined_meta = _combine_meta_datasets(
+            meta_dataset,
+            pd.read_parquet(source_meta_path),
+        )
+        paths.update(
+            {
+                "combined_meta_csv": data_dir
+                / "meta_model_dataset_with_source_holdouts.csv",
+                "combined_meta_parquet": data_dir
+                / "meta_model_dataset_with_source_holdouts.parquet",
+                "combined_dictionary_csv": reports_dir
+                / "meta_dataset_with_source_holdouts_dictionary.csv",
+            }
+        )
     _write_table(
         labeled,
-        paths["prediction_failures_csv"],
+        paths["prediction_failures_csv_gz"],
         paths["prediction_failures_parquet"],
     )
+    legacy_failure_csv = results_dir / "prediction_failures.csv"
+    if legacy_failure_csv.exists():
+        legacy_failure_csv.unlink()
     _write_table(
         run_summary,
         paths["run_failure_summary_csv"],
@@ -101,6 +122,39 @@ def build_failure_meta_artifacts(
         paths["meta_model_dataset_parquet"],
     )
     dictionary.to_csv(paths["meta_dataset_dictionary_csv"], index=False)
+    if combined_meta is not None:
+        _write_table(
+            combined_meta,
+            paths["combined_meta_csv"],
+            paths["combined_meta_parquet"],
+        )
+        build_meta_data_dictionary(combined_meta).to_csv(
+            paths["combined_dictionary_csv"], index=False
+        )
+        source_report_path = reports_dir / "source_holdout_model_report.json"
+        if source_report_path.exists():
+            source_report = json.loads(source_report_path.read_text(encoding="utf-8"))
+            source_report["combined_meta_rows"] = int(len(combined_meta))
+            source_report["combined_distinct_tasks"] = int(
+                combined_meta["task_id"].nunique()
+            )
+            source_report["combined_meta_refreshed_after_within_update"] = True
+            for key in (
+                "combined_meta_csv",
+                "combined_meta_parquet",
+                "combined_dictionary_csv",
+            ):
+                source_report.setdefault("output_files", {})[key] = {
+                    "path": str(paths[key]),
+                    "bytes": int(paths[key].stat().st_size),
+                }
+            source_report_path.write_text(
+                json.dumps(source_report, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            _flatten_report(source_report).to_csv(
+                reports_dir / "source_holdout_model_report.csv", index=False
+            )
 
     report = {
         "status": "fail" if errors else "pass",
@@ -138,7 +192,8 @@ def build_failure_meta_artifacts(
         ),
         "validation_policy": (
             "Future meta-model evaluation must hold out complete tasks or datasets. Randomly "
-            "splitting the 180 run rows would leak repeated task-level meta-features."
+            f"splitting the {len(meta_dataset):,} run rows would leak repeated task-level "
+            "meta-features."
         ),
         "current_limitation": (
             "The table contains 15 correlated tasks from one master benchmark. It is suitable "
@@ -146,6 +201,8 @@ def build_failure_meta_artifacts(
             "meta-model. Source-holdout and external-dataset tasks must be added."
         ),
         "meta_descriptors": list(META_DESCRIPTORS),
+        "combined_meta_rows": int(len(combined_meta)) if combined_meta is not None else None,
+        "combined_meta_refreshed": combined_meta is not None,
     }
     output_files: dict[str, dict[str, object]] = {}
     for name, path in paths.items():
@@ -159,6 +216,9 @@ def build_failure_meta_artifacts(
     _flatten_report(report).to_csv(paths["failure_analysis_report_csv"], index=False)
     if errors:
         raise RuntimeError("Failure/meta artifacts failed validation:\n- " + "\n- ".join(errors))
+    stale_marker = reports_dir / "downstream_artifacts_stale.json"
+    if stale_marker.exists():
+        stale_marker.unlink()
     return paths
 
 

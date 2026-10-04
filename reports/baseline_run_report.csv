@@ -1,101 +1,173 @@
 metric,value
-status,pass
-scikit_learn_version,1.9.1
-requested_feature_types,rdkit_descriptors
-requested_feature_types,morgan_fingerprints
+append_mode,True
+appended_models,chemprop
+appended_models,ngboost
+completed_runs,465
+failed_runs,[]
+failure_label_policy,No binary success/failure labels are created at this stage; molecule-level residuals are retained for evidence-based failure definitions.
+final_fit_policy,"After selection, preprocessing and the model are refit on training plus validation; the test partition is evaluated once."
+output_files.results_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.csv
+output_files.results_csv.bytes,178992
+output_files.results_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.parquet
+output_files.results_parquet.bytes,60814
+output_files.predictions_csv_gz.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.csv.gz
+output_files.predictions_csv_gz.bytes,26658940
+output_files.predictions_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.parquet
+output_files.predictions_parquet.bytes,14434760
+output_files.tuning_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.csv
+output_files.tuning_csv.bytes,259051
+output_files.tuning_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.parquet
+output_files.tuning_parquet.bytes,63388
 requested_feature_types,maccs_fingerprints
-requested_strategies,random
-requested_strategies,scaffold
-requested_strategies,low_similarity
+requested_feature_types,molecular_graph
+requested_feature_types,morgan_fingerprints
+requested_feature_types,rdkit_descriptors
+requested_models,chemprop
+requested_models,dummy
+requested_models,elastic_net
+requested_models,esol
+requested_models,extra_trees
+requested_models,hist_gradient_boosting
+requested_models,knn
+requested_models,mlp
+requested_models,ngboost
+requested_models,random_forest
+requested_models,ridge
+requested_models,svr
+requested_models,xgboost
 requested_repeats,1
 requested_repeats,2
 requested_repeats,3
 requested_repeats,4
 requested_repeats,5
-requested_models,dummy
-requested_models,ridge
-requested_models,random_forest
-requested_models,extra_trees
-requested_models,hist_gradient_boosting
-requested_models,svr
-requested_models,mlp
-completed_runs,285
-test_prediction_rows,255645
-tuning_candidate_rows,855
-skipped_runs.0.run_id,random_r1_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.0.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.1.run_id,random_r2_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.1.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.2.run_id,random_r3_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.2.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.3.run_id,random_r4_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.3.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.4.run_id,random_r5_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.4.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.5.run_id,scaffold_r1_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.5.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.6.run_id,scaffold_r2_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.6.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.7.run_id,scaffold_r3_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.7.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.8.run_id,scaffold_r4_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.8.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.9.run_id,scaffold_r5_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.9.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.10.run_id,low_similarity_r1_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.10.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.11.run_id,low_similarity_r2_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.11.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.12.run_id,low_similarity_r3_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.12.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.13.run_id,low_similarity_r4_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.13.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.14.run_id,low_similarity_r5_morgan_fingerprints_hist_gradient_boosting
-skipped_runs.14.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.15.run_id,random_r1_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.15.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.16.run_id,random_r2_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.16.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.17.run_id,random_r3_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.17.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.18.run_id,random_r4_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.18.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.19.run_id,random_r5_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.19.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.20.run_id,scaffold_r1_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.20.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.21.run_id,scaffold_r2_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.21.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.22.run_id,scaffold_r3_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.22.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.23.run_id,scaffold_r4_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.23.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.24.run_id,scaffold_r5_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.24.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.25.run_id,low_similarity_r1_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.25.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.26.run_id,low_similarity_r2_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.26.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.27.run_id,low_similarity_r3_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.27.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.28.run_id,low_similarity_r4_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.28.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-skipped_runs.29.run_id,low_similarity_r5_maccs_fingerprints_hist_gradient_boosting
-skipped_runs.29.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
-failed_runs,[]
-selection_policy,"Minimum validation RMSE, with validation MAE as the tie-breaker."
-final_fit_policy,"After selection, preprocessing and the model are refit on training plus validation; the test partition is evaluated once."
+requested_strategies,low_similarity
+requested_strategies,random
+requested_strategies,scaffold
 residual_definition,true_log_s - predicted_log_s
-failure_label_policy,No binary success/failure labels are created at this stage; molecule-level residuals are retained for evidence-based failure definitions.
-output_files.model_results_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.csv
-output_files.model_results_csv.bytes,105697
-output_files.model_results_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.parquet
-output_files.model_results_parquet.bytes,40944
-output_files.test_predictions_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.csv
-output_files.test_predictions_csv.bytes,70067862
-output_files.test_predictions_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.parquet
-output_files.test_predictions_parquet.bytes,9594491
-output_files.hyperparameter_results_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.csv
-output_files.hyperparameter_results_csv.bytes,161937
-output_files.hyperparameter_results_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.parquet
-output_files.hyperparameter_results_parquet.bytes,41670
+scikit_learn_version,1.9.1
+selection_policy,"Minimum validation RMSE, with validation MAE as the tie-breaker."
+skipped_runs.0.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.0.run_id,random_r1_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.1.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.1.run_id,random_r2_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.2.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.2.run_id,random_r3_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.3.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.3.run_id,random_r4_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.4.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.4.run_id,random_r5_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.5.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.5.run_id,scaffold_r1_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.6.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.6.run_id,scaffold_r2_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.7.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.7.run_id,scaffold_r3_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.8.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.8.run_id,scaffold_r4_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.9.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.9.run_id,scaffold_r5_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.10.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.10.run_id,low_similarity_r1_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.11.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.11.run_id,low_similarity_r2_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.12.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.12.run_id,low_similarity_r3_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.13.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.13.run_id,low_similarity_r4_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.14.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.14.run_id,low_similarity_r5_morgan_fingerprints_hist_gradient_boosting
+skipped_runs.15.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.15.run_id,random_r1_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.16.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.16.run_id,random_r2_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.17.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.17.run_id,random_r3_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.18.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.18.run_id,random_r4_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.19.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.19.run_id,random_r5_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.20.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.20.run_id,scaffold_r1_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.21.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.21.run_id,scaffold_r2_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.22.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.22.run_id,scaffold_r3_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.23.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.23.run_id,scaffold_r4_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.24.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.24.run_id,scaffold_r5_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.25.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.25.run_id,low_similarity_r1_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.26.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.26.run_id,low_similarity_r2_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.27.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.27.run_id,low_similarity_r3_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.28.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.28.run_id,low_similarity_r4_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.29.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.29.run_id,low_similarity_r5_maccs_fingerprints_hist_gradient_boosting
+skipped_runs.30.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.30.run_id,random_r1_morgan_fingerprints_esol
+skipped_runs.31.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.31.run_id,random_r2_morgan_fingerprints_esol
+skipped_runs.32.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.32.run_id,random_r3_morgan_fingerprints_esol
+skipped_runs.33.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.33.run_id,random_r4_morgan_fingerprints_esol
+skipped_runs.34.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.34.run_id,random_r5_morgan_fingerprints_esol
+skipped_runs.35.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.35.run_id,scaffold_r1_morgan_fingerprints_esol
+skipped_runs.36.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.36.run_id,scaffold_r2_morgan_fingerprints_esol
+skipped_runs.37.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.37.run_id,scaffold_r3_morgan_fingerprints_esol
+skipped_runs.38.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.38.run_id,scaffold_r4_morgan_fingerprints_esol
+skipped_runs.39.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.39.run_id,scaffold_r5_morgan_fingerprints_esol
+skipped_runs.40.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.40.run_id,low_similarity_r1_morgan_fingerprints_esol
+skipped_runs.41.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.41.run_id,low_similarity_r2_morgan_fingerprints_esol
+skipped_runs.42.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.42.run_id,low_similarity_r3_morgan_fingerprints_esol
+skipped_runs.43.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.43.run_id,low_similarity_r4_morgan_fingerprints_esol
+skipped_runs.44.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.44.run_id,low_similarity_r5_morgan_fingerprints_esol
+skipped_runs.45.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.45.run_id,random_r1_maccs_fingerprints_esol
+skipped_runs.46.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.46.run_id,random_r2_maccs_fingerprints_esol
+skipped_runs.47.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.47.run_id,random_r3_maccs_fingerprints_esol
+skipped_runs.48.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.48.run_id,random_r4_maccs_fingerprints_esol
+skipped_runs.49.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.49.run_id,random_r5_maccs_fingerprints_esol
+skipped_runs.50.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.50.run_id,scaffold_r1_maccs_fingerprints_esol
+skipped_runs.51.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.51.run_id,scaffold_r2_maccs_fingerprints_esol
+skipped_runs.52.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.52.run_id,scaffold_r3_maccs_fingerprints_esol
+skipped_runs.53.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.53.run_id,scaffold_r4_maccs_fingerprints_esol
+skipped_runs.54.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.54.run_id,scaffold_r5_maccs_fingerprints_esol
+skipped_runs.55.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.55.run_id,low_similarity_r1_maccs_fingerprints_esol
+skipped_runs.56.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.56.run_id,low_similarity_r2_maccs_fingerprints_esol
+skipped_runs.57.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.57.run_id,low_similarity_r3_maccs_fingerprints_esol
+skipped_runs.58.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.58.run_id,low_similarity_r4_maccs_fingerprints_esol
+skipped_runs.59.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.59.run_id,low_similarity_r5_maccs_fingerprints_esol
+status,pass
+test_prediction_rows,417105
+tuning_candidate_rows,1335
+xgboost_version,3.2.0
+chemprop_integration,Complete fixed-task Chemprop grid merged from the separately resumable runner.

@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
 import pyarrow as pa
+import pyarrow.dataset as ds
 import pyarrow.parquet as pq
 
 from .failure_meta import (
@@ -18,6 +20,91 @@ from .failure_meta import (
 )
 from .modeling import ALL_MODELS, CORE_MODELS, FEATURE_TYPES, run_baseline_experiments
 from .run_baselines import _flatten_report, _write_table
+
+
+def _concatenate_parquet_files(sources: list[Path], destination: Path) -> int:
+    if destination.exists():
+        destination.unlink()
+    schema = pa.unify_schemas([pq.ParquetFile(source).schema_arrow for source in sources])
+    writer: pq.ParquetWriter | None = None
+    rows = 0
+    try:
+        for source in sources:
+            parquet = pq.ParquetFile(source)
+            for batch in parquet.iter_batches(batch_size=100_000):
+                table = pa.Table.from_batches([batch])
+                for field in schema:
+                    if field.name not in table.column_names:
+                        table = table.append_column(
+                            field.name,
+                            pa.nulls(table.num_rows, type=field.type),
+                        )
+                table = table.select(schema.names).cast(schema)
+                if writer is None:
+                    writer = pq.ParquetWriter(destination, schema, compression="zstd")
+                writer.write_table(table)
+                rows += table.num_rows
+    finally:
+        if writer is not None:
+            writer.close()
+    if writer is None:
+        raise RuntimeError("No Parquet rows were available to concatenate")
+    return rows
+
+
+def _write_partitioned_prediction_dataset(
+    sources: list[Path],
+    destination: Path,
+) -> int:
+    """Write bounded Parquet parts grouped by held-out source for GitHub compatibility."""
+    if destination.exists():
+        if destination.is_dir():
+            shutil.rmtree(destination)
+        else:
+            destination.unlink()
+    datasets = [ds.dataset(source, format="parquet", partitioning="hive") for source in sources]
+    schema = pa.unify_schemas([dataset.schema for dataset in datasets])
+    if "heldout_source" not in schema.names:
+        raise ValueError("Source prediction dataset has no heldout_source column")
+    rows = 0
+    destination.mkdir(parents=True)
+    for source_number, dataset in enumerate(datasets):
+        for batch_number, batch in enumerate(dataset.to_batches(batch_size=100_000)):
+            table = pa.Table.from_batches([batch])
+            for field in schema:
+                if field.name not in table.column_names:
+                    table = table.append_column(
+                        field.name,
+                        pa.nulls(table.num_rows, type=field.type),
+                    )
+            table = table.select(schema.names).cast(schema)
+            pq.write_to_dataset(
+                table,
+                root_path=destination,
+                partition_cols=["heldout_source"],
+                basename_template=(
+                    f"part-source{source_number:02d}-batch{batch_number:05d}-{{i}}.parquet"
+                ),
+                compression="zstd",
+            )
+            rows += table.num_rows
+    if rows == 0:
+        raise RuntimeError("No source prediction rows were available to write")
+    oversized = [
+        path for path in destination.rglob("*.parquet") if path.stat().st_size >= 95_000_000
+    ]
+    if oversized:
+        raise RuntimeError(
+            "Partitioned source prediction dataset contains files at or above 95 MB: "
+            + ", ".join(str(path) for path in oversized)
+        )
+    return rows
+
+
+def _path_size(path: Path) -> int:
+    if path.is_dir():
+        return sum(item.stat().st_size for item in path.rglob("*") if item.is_file())
+    return path.stat().st_size
 
 
 def _single_value(frame: pd.DataFrame, column: str, task_id: str) -> Any:
@@ -86,6 +173,7 @@ def build_source_holdout_model_artifacts(
     reports_dir: Path,
     model_names: tuple[str, ...] = CORE_MODELS,
     show_progress: bool = False,
+    append_existing: bool = False,
 ) -> dict[str, Path]:
     data_dir.mkdir(parents=True, exist_ok=True)
     results_dir.mkdir(parents=True, exist_ok=True)
@@ -108,6 +196,32 @@ def build_source_holdout_model_artifacts(
         "source_model_report_json": reports_dir / "source_holdout_model_report.json",
         "source_model_report_csv": reports_dir / "source_holdout_model_report.csv",
     }
+    existing: dict[str, pd.DataFrame] = {}
+    existing_report: dict[str, Any] = {}
+    if append_existing:
+        required_existing = [
+            paths["source_model_results_parquet"],
+            paths["source_predictions_parquet"],
+            paths["source_tuning_parquet"],
+            paths["source_run_summary_parquet"],
+            paths["source_meta_parquet"],
+            paths["source_model_report_json"],
+        ]
+        missing_existing = [str(path) for path in required_existing if not path.exists()]
+        if missing_existing:
+            raise FileNotFoundError(
+                "Append mode requires the existing completed source outputs:\n- "
+                + "\n- ".join(missing_existing)
+            )
+        existing = {
+            "results": pd.read_parquet(paths["source_model_results_parquet"]),
+            "tuning": pd.read_parquet(paths["source_tuning_parquet"]),
+            "run_summary": pd.read_parquet(paths["source_run_summary_parquet"]),
+            "source_meta": pd.read_parquet(paths["source_meta_parquet"]),
+        }
+        existing_report = json.loads(
+            paths["source_model_report_json"].read_text(encoding="utf-8")
+        )
 
     temporary_predictions = paths["source_predictions_parquet"].with_suffix(".incomplete.parquet")
     if temporary_predictions.exists():
@@ -192,13 +306,74 @@ def build_source_holdout_model_artifacts(
         )
     if writer is None or not temporary_predictions.exists():
         raise RuntimeError("Source-holdout modeling produced no prediction file")
-    temporary_predictions.replace(paths["source_predictions_parquet"])
-
     results = pd.concat(result_frames, ignore_index=True)
     tuning = pd.concat(tuning_frames, ignore_index=True)
     run_summary = pd.concat(run_summary_frames, ignore_index=True)
     source_meta = pd.concat(source_meta_frames, ignore_index=True)
     source_meta["x_evaluation_design"] = "source_holdout"
+    if append_existing:
+        overlap = sorted(set(existing["results"]["run_id"]).intersection(results["run_id"]))
+        if overlap:
+            raise ValueError(
+                "Append mode found existing source run IDs and refused to overwrite them:\n- "
+                + "\n- ".join(overlap[:20])
+            )
+        results = pd.concat([existing["results"], results], ignore_index=True)
+        tuning = pd.concat([existing["tuning"], tuning], ignore_index=True)
+        run_summary = pd.concat([existing["run_summary"], run_summary], ignore_index=True)
+        source_meta = pd.concat([existing["source_meta"], source_meta], ignore_index=True)
+
+    results = results.sort_values(
+        ["task_id", "feature_type", "model"], kind="stable"
+    ).reset_index(drop=True)
+    tuning = tuning.sort_values(["task_id", "run_id", "candidate"], kind="stable").reset_index(
+        drop=True
+    )
+    run_summary = run_summary.sort_values(["task_id", "run_id"], kind="stable").reset_index(
+        drop=True
+    )
+    source_meta = source_meta.sort_values(
+        ["task_id", "x_feature_type", "x_model"], kind="stable"
+    ).reset_index(drop=True)
+    if results["run_id"].duplicated().any():
+        raise RuntimeError("Source model results contain duplicate run IDs")
+    if tuning.duplicated(["run_id", "candidate"]).any():
+        raise RuntimeError("Source tuning results contain duplicate run/candidate rows")
+    if run_summary["run_id"].duplicated().any():
+        raise RuntimeError("Source run summaries contain duplicate run IDs")
+    if source_meta["run_id"].duplicated().any():
+        raise RuntimeError("Source meta-data contain duplicate run IDs")
+
+    partitioned_predictions = results_dir / "source_holdout_predictions.incomplete.parquet"
+    prediction_sources = [temporary_predictions]
+    if append_existing:
+        prediction_sources.insert(0, paths["source_predictions_parquet"])
+    prediction_rows = _write_partitioned_prediction_dataset(
+        prediction_sources,
+        partitioned_predictions,
+    )
+    canonical_predictions = paths["source_predictions_parquet"]
+    backup_predictions = results_dir / "source_holdout_predictions.backup.parquet"
+    if backup_predictions.exists():
+        if backup_predictions.is_dir():
+            shutil.rmtree(backup_predictions)
+        else:
+            backup_predictions.unlink()
+    if canonical_predictions.exists():
+        canonical_predictions.rename(backup_predictions)
+    try:
+        partitioned_predictions.rename(canonical_predictions)
+    except Exception:
+        if backup_predictions.exists():
+            backup_predictions.rename(canonical_predictions)
+        raise
+    if backup_predictions.exists():
+        if backup_predictions.is_dir():
+            shutil.rmtree(backup_predictions)
+        else:
+            backup_predictions.unlink()
+    temporary_predictions.unlink()
+
     combined_meta = _combine_meta_datasets(base_meta, source_meta)
     dictionary = build_meta_data_dictionary(combined_meta)
     group_summary = build_failure_group_summary(run_summary).merge(
@@ -243,14 +418,16 @@ def build_source_holdout_model_artifacts(
         "source_meta_rows": int(len(source_meta)),
         "combined_meta_rows": int(len(combined_meta)),
         "combined_distinct_tasks": int(combined_meta["task_id"].nunique()),
-        "requested_models": list(model_names),
-        "requested_feature_types": list(feature_tables),
+        "requested_models": sorted(str(value) for value in results["model"].unique()),
+        "requested_feature_types": sorted(
+            str(value) for value in results["feature_type"].unique()
+        ),
         "failed_runs": failure_records,
         "skipped_runs": skipped_records,
         "prediction_storage_policy": (
-            "Molecule-level source-holdout predictions and q_i labels are stored in one "
-            "compressed Parquet file. A CSV copy is intentionally omitted because the estimated "
-            "size exceeds GitHub's 100 MB per-file limit."
+            "Molecule-level source-holdout predictions and q_i labels are stored as a compressed "
+            "Parquet dataset partitioned by held-out source, with bounded part files below 95 MB. "
+            "A CSV copy is intentionally omitted because it would exceed GitHub's 100 MB limit."
         ),
         "meta_validation_policy": (
             "Do not randomly split combined meta rows. Hold out complete heldout_source groups "
@@ -262,8 +439,19 @@ def build_source_holdout_model_artifacts(
             "publication claim."
         ),
     }
+    if append_existing:
+        skip_by_run = {
+            item["run_id"]: item
+            for item in [
+                *existing_report.get("skipped_runs", []),
+                *skipped_records,
+            ]
+        }
+        report["skipped_runs"] = list(skip_by_run.values())
+        report["append_mode"] = True
+        report["appended_models"] = list(model_names)
     report["output_files"] = {
-        name: {"path": str(path), "bytes": int(path.stat().st_size)}
+        name: {"path": str(path), "bytes": int(_path_size(path))}
         for name, path in paths.items()
         if not name.startswith("source_model_report")
     }
@@ -285,12 +473,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--features", nargs="+", choices=FEATURE_TYPES, default=list(FEATURE_TYPES)
     )
+    parser.add_argument(
+        "--append",
+        action="store_true",
+        help="Append disjoint model runs to existing outputs; refuse duplicate run IDs.",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     root = args.root.resolve()
+    stale_marker = root / "reports/downstream_artifacts_stale.json"
+    if stale_marker.exists():
+        raise RuntimeError(
+            "Within-benchmark downstream artifacts are marked stale. Run "
+            "aquasol-build-meta-dataset before source-holdout modeling. This only refreshes "
+            "failure labels and the meta-dataset; it does not fit a meta-model."
+        )
     input_paths = {
         "tasks": root / "data_processed/source_holdout_tasks.parquet",
         "descriptors": root / "data_processed/rdkit_descriptors.parquet",
@@ -319,6 +519,7 @@ def main() -> None:
         reports_dir=root / "reports",
         model_names=tuple(args.models),
         show_progress=True,
+        append_existing=args.append,
     )
     print("Source-holdout modeling completed.")
     for name, path in paths.items():

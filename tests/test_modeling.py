@@ -2,7 +2,10 @@ import numpy as np
 import pandas as pd
 
 from aquasol_meta.modeling import (
+    ESOLRegressor,
+    _candidate_parameters,
     _feature_columns,
+    _is_compatible,
     regression_metrics,
     run_baseline_experiments,
 )
@@ -100,6 +103,31 @@ def test_numerically_unbounded_ipc_descriptor_is_excluded() -> None:
     )
 
     assert _feature_columns("rdkit_descriptors", descriptors) == ["AvgIpc", "MolWt"]
+
+
+def test_additional_model_grid_and_compatibility_are_explicit() -> None:
+    for model_name in ("elastic_net", "knn", "xgboost", "ngboost", "esol"):
+        assert _candidate_parameters(model_name)
+
+    assert _is_compatible("xgboost", "morgan_fingerprints")
+    assert _is_compatible("knn", "maccs_fingerprints")
+    assert not _is_compatible("ngboost", "morgan_fingerprints")
+    assert not _is_compatible("esol", "maccs_fingerprints")
+
+
+def test_esol_equation_matches_published_coefficient_form() -> None:
+    frame = pd.DataFrame(
+        {
+            "MolLogP": [2.0],
+            "MolWt": [100.0],
+            "NumRotatableBonds": [2.0],
+            "_esol_aromatic_proportion": [0.5],
+        }
+    )
+    prediction = ESOLRegressor().fit(frame, np.array([-2.0])).predict(frame)
+
+    expected = 0.16 - 1.5 * 2.0 - 0.01 * 100.0 + 0.5 * 2.0 - 1.5 * 0.5
+    assert np.isclose(prediction[0], expected)
 
 
 def test_baseline_report_can_be_flattened_without_losing_nested_values() -> None:

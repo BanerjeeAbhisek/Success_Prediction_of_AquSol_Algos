@@ -176,8 +176,10 @@ arrays used by tree models. The normalized `AvgIpc` descriptor remains available
 label-independent rule is applied consistently to every split.
 
 The command writes model-level metrics, molecule-level test residuals, and validation candidate
-results to `results/` in CSV and Parquet formats. The run report is written to `reports/` as both
-JSON and a long-form `metric,value` CSV. It does not create binary failure labels.
+results to `results/`. Large molecule-level CSV tables use gzip compression (`.csv.gz`) to remain
+below GitHub's per-file limit; pandas and spreadsheet import tools can read them directly. Compact
+Parquet copies are also retained. The run report is written to `reports/` as both JSON and a
+long-form `metric,value` CSV. It does not create binary failure labels.
 
 After reviewing the smoke test, run all fixed split strategies and repeats with the core models:
 
@@ -190,6 +192,60 @@ aquasol-run-baselines \
 To run only the advanced models after checking their runtime and convergence, pass
 `--models hist_gradient_boosting svr mlp`. To retain the core models too, list all seven model
 names. HistGradientBoosting is restricted to the compact RDKit descriptor representation.
+
+Five additional classical or chemistry-aware comparisons are available:
+
+- Elastic Net, as a sparse linear comparator;
+- distance-weighted k-nearest neighbors, as a local-similarity method;
+- XGBoost, as a modern boosted-tree model;
+- NGBoost on RDKit descriptors, providing a predictive distribution as well as a point estimate;
+  and
+- the fixed Delaney ESOL equation, as an interpretable chemistry baseline rather than a fitted ML
+  model.
+
+They can be appended to the completed seven-model benchmark without rerunning or overwriting it:
+
+```bash
+aquasol-run-baselines \
+  --strategies random scaffold low_similarity \
+  --repeats 1 2 3 4 5 \
+  --models elastic_net knn xgboost ngboost esol \
+  --append
+```
+
+Elastic Net, kNN, and XGBoost use all three existing representations. NGBoost and ESOL are
+descriptor-only by design. NGBoost writes its predicted standard deviation, Gaussian negative
+log-likelihood, and 95% interval coverage; the other models leave those uncertainty fields missing.
+Append mode refuses duplicate run identifiers and does not change the existing outputs if a new run
+fails. Whenever baseline results change, `reports/downstream_artifacts_stale.json` explicitly marks
+the failure summaries and meta-dataset as needing a refresh. Running `aquasol-build-meta-dataset`
+clears that marker; it reconstructs tables and does not fit the meta-model.
+When source-holdout meta rows already exist, the same refresh also regenerates the combined
+within-benchmark plus source-holdout table, without rerunning source models.
+
+Chemprop 2.3 is handled by a separate resumable command because its D-MPNN learns directly from the
+molecular graph and uses validation-based early stopping rather than the scikit-learn fitting
+protocol:
+
+```bash
+aquasol-run-chemprop --design within
+aquasol-run-chemprop --design source
+```
+
+After the complete within run, merge it into the canonical benchmark without retraining by using:
+
+```bash
+aquasol-run-chemprop --design within --append-canonical
+```
+
+The default Chemprop experiment is one fixed D-MPNN architecture, 30 maximum epochs, patience 5,
+and one model per task. This computer has no available PyTorch GPU backend, so the runner uses CPU
+and saves one completed cache shard per task. An interrupted command can be rerun safely; cached
+tasks are reused only when epochs, patience, and batch size match. For a
+quick pipeline check, use `--task-limit 1 --epochs 2 --patience 1`; partial outputs are explicitly
+named and ignored by Git. Complete Chemprop tables remain as auditable standalone outputs;
+`--append-canonical` also adds their rows to the canonical benchmark before the failure/meta tables
+are refreshed. None of these commands trains the meta-model.
 
 ## Characterize failures and build the meta-dataset
 
@@ -215,9 +271,9 @@ candidates, `y_top3_candidate` is the binary model-selection outcome and
 `y_rmse_regret_vs_best` measures continuous distance from the task winner. Do not randomly split
 meta-dataset rows: hold out complete `task_id` groups, and ultimately complete external datasets.
 
-The current 180-row table represents 15 correlated tasks from one master benchmark. It validates
-the failure-analysis pipeline but is not sufficient for the final publishable meta-model. Add
-source-holdout and external-dataset tasks before training the definitive model selector.
+The within-benchmark table contains correlated model rows from 15 chemical tasks. It validates the
+failure-analysis pipeline but is not sufficient for the final publishable meta-model. Source-holdout
+and genuinely external-dataset tasks are required before training the definitive model selector.
 
 ## Add source-holdout tasks
 
@@ -239,9 +295,19 @@ Run the core model grid over the source tasks with:
 aquasol-run-source-holdouts
 ```
 
+After the completed core and advanced grids exist, append the five additional classical or
+chemistry-aware models with:
+
+```bash
+aquasol-run-source-holdouts \
+  --models elastic_net knn xgboost ngboost esol \
+  --append
+```
+
 This creates source-level results and a combined meta-dataset. Molecule-level source predictions
-are Parquet-only because an equivalent CSV would exceed GitHub's 100 MB per-file limit. Evaluate
-the meta-model by holding out complete `heldout_source` groups. The source datasets share many
+are a Parquet-only dataset partitioned by held-out source; each physical part remains below GitHub's
+100 MB per-file limit, and `pandas.read_parquet` reads the directory normally. Evaluate the
+meta-model by holding out complete `heldout_source` groups. The source datasets share many
 molecules, so genuinely external datasets are still required for the strongest publication claim.
 
 ## Run tests
@@ -249,6 +315,32 @@ molecules, so genuinely external datasets are still required for the strongest p
 ```bash
 pytest
 ```
+
+## Reproduce and verify the current milestone
+
+`requirements-lock.txt` records the exact Python packages used for the archived results. A fresh
+Python 3.11 environment can be populated with:
+
+```bash
+python -m pip install -r requirements-lock.txt
+python -m pip install -e . --no-deps
+```
+
+The complete command order for rebuilding the current milestone from `Data/` is recorded in
+`scripts/run_reproducible_pipeline.sh`. It deliberately reproduces the current experimental scope:
+all 13 within-benchmark model families and the existing seven-family source-holdout comparison. It
+does not train a meta-model.
+
+After any intentional artifact change, regenerate the audit snapshot with:
+
+```bash
+aquasol-build-reproducibility
+```
+
+This writes `reports/reproducibility_manifest.json` and `.csv`, plus
+`reports/artifact_checksums.csv`. The manifest records exact package versions, seeds, row counts,
+model counts, Chemprop configuration and SHA-256 checksums, and fails if a checked file reaches the
+95 MB GitHub safety threshold.
 
 ## Important modelling rule
 

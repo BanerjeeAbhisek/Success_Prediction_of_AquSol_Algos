@@ -57,6 +57,7 @@ def build_baseline_artifacts(
     repeats: tuple[int, ...] = (1,),
     model_names: tuple[str, ...] = CORE_MODELS,
     show_progress: bool = False,
+    append_existing: bool = False,
 ) -> dict[str, Path]:
     results_dir.mkdir(parents=True, exist_ok=True)
     reports_dir.mkdir(parents=True, exist_ok=True)
@@ -76,19 +77,92 @@ def build_baseline_artifacts(
     paths = {
         "model_results_csv": results_dir / "model_results.csv",
         "model_results_parquet": results_dir / "model_results.parquet",
-        "test_predictions_csv": results_dir / "test_predictions.csv",
+        "test_predictions_csv_gz": results_dir / "test_predictions.csv.gz",
         "test_predictions_parquet": results_dir / "test_predictions.parquet",
         "hyperparameter_results_csv": results_dir / "hyperparameter_results.csv",
         "hyperparameter_results_parquet": results_dir / "hyperparameter_results.parquet",
         "baseline_run_report": reports_dir / "baseline_run_report.json",
         "baseline_run_report_csv": reports_dir / "baseline_run_report.csv",
     }
+    if report["failed_runs"]:
+        failures = "\n- ".join(
+            f"{item['run_id']}: {item['reason']}" for item in report["failed_runs"]
+        )
+        raise RuntimeError(
+            "One or more baseline runs failed; existing outputs were not changed:\n- "
+            + failures
+        )
+
+    if append_existing:
+        required_existing = [
+            paths["model_results_parquet"],
+            paths["test_predictions_parquet"],
+            paths["hyperparameter_results_parquet"],
+            paths["baseline_run_report"],
+        ]
+        missing_existing = [str(path) for path in required_existing if not path.exists()]
+        if missing_existing:
+            raise FileNotFoundError(
+                "Append mode requires the existing completed outputs:\n- "
+                + "\n- ".join(missing_existing)
+            )
+        existing_results = pd.read_parquet(paths["model_results_parquet"])
+        overlap = sorted(set(existing_results["run_id"]).intersection(results["run_id"]))
+        if overlap:
+            raise ValueError(
+                "Append mode found existing run IDs and refused to overwrite them:\n- "
+                + "\n- ".join(overlap[:20])
+            )
+        existing_predictions = pd.read_parquet(paths["test_predictions_parquet"])
+        existing_tuning = pd.read_parquet(paths["hyperparameter_results_parquet"])
+        existing_report = json.loads(paths["baseline_run_report"].read_text(encoding="utf-8"))
+        results = pd.concat([existing_results, results], ignore_index=True).sort_values(
+            ["split_strategy", "repeat", "feature_type", "model"], kind="stable"
+        )
+        predictions = pd.concat(
+            [existing_predictions, predictions], ignore_index=True
+        ).sort_values(["run_id", "molecule_id"], kind="stable")
+        tuning = pd.concat([existing_tuning, tuning], ignore_index=True).sort_values(
+            ["run_id", "candidate"], kind="stable"
+        )
+        skip_by_run = {
+            item["run_id"]: item
+            for item in [
+                *existing_report.get("skipped_runs", []),
+                *report.get("skipped_runs", []),
+            ]
+        }
+        report["skipped_runs"] = list(skip_by_run.values())
+        report["append_mode"] = True
+        report["appended_models"] = list(model_names)
+        report["requested_models"] = sorted(str(value) for value in results["model"].unique())
+        report["requested_feature_types"] = sorted(
+            str(value) for value in results["feature_type"].unique()
+        )
+        report["requested_strategies"] = sorted(
+            str(value) for value in results["split_strategy"].unique()
+        )
+        report["requested_repeats"] = sorted(int(value) for value in results["repeat"].unique())
+        report["completed_runs"] = int(len(results))
+        report["test_prediction_rows"] = int(len(predictions))
+        report["tuning_candidate_rows"] = int(len(tuning))
+
+    if results["run_id"].duplicated().any():
+        raise RuntimeError("Model results contain duplicate run IDs")
+    if predictions.duplicated(["run_id", "molecule_id"]).any():
+        raise RuntimeError("Test predictions contain duplicate run/molecule rows")
+    if tuning.duplicated(["run_id", "candidate"]).any():
+        raise RuntimeError("Tuning results contain duplicate run/candidate rows")
+
     _write_table(results, paths["model_results_csv"], paths["model_results_parquet"])
     _write_table(
         predictions,
-        paths["test_predictions_csv"],
+        paths["test_predictions_csv_gz"],
         paths["test_predictions_parquet"],
     )
+    legacy_prediction_csv = results_dir / "test_predictions.csv"
+    if legacy_prediction_csv.exists():
+        legacy_prediction_csv.unlink()
     _write_table(
         tuning,
         paths["hyperparameter_results_csv"],
@@ -103,11 +177,35 @@ def build_baseline_artifacts(
         json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     _flatten_report(report).to_csv(paths["baseline_run_report_csv"], index=False)
-    if report["failed_runs"]:
-        failures = "\n- ".join(
-            f"{item['run_id']}: {item['reason']}" for item in report["failed_runs"]
+    stale_marker = reports_dir / "downstream_artifacts_stale.json"
+    stale_marker.write_text(
+        json.dumps(
+            {
+                "status": "stale",
+                "reason": (
+                    "Baseline model results changed after the failure summaries and meta-dataset "
+                    "were last built."
+                ),
+                "current_baseline_runs": int(len(results)),
+                "affected_outputs": [
+                    "results/prediction_failures.*",
+                    "results/run_failure_summary.*",
+                    "results/molecule_failure_summary.*",
+                    "results/failure_group_summary.csv",
+                    "data_processed/meta_model_dataset.*",
+                    "data_processed/meta_model_dataset_with_source_holdouts.*",
+                ],
+                "refresh_command": "aquasol-build-meta-dataset",
+                "note": (
+                    "This refresh constructs labels and tables; it does not fit the meta-model."
+                ),
+            },
+            indent=2,
+            sort_keys=True,
         )
-        raise RuntimeError(f"One or more baseline runs failed:\n- {failures}")
+        + "\n",
+        encoding="utf-8",
+    )
     return paths
 
 
@@ -138,6 +236,11 @@ def parse_args() -> argparse.Namespace:
         nargs="+",
         choices=ALL_MODELS,
         default=list(CORE_MODELS),
+    )
+    parser.add_argument(
+        "--append",
+        action="store_true",
+        help="Append disjoint model runs to existing outputs; refuse duplicate run IDs.",
     )
     return parser.parse_args()
 
@@ -172,6 +275,7 @@ def main() -> None:
         repeats=tuple(args.repeats),
         model_names=tuple(args.models),
         show_progress=True,
+        append_existing=args.append,
     )
     print("Baseline modeling completed.")
     for name, path in paths.items():

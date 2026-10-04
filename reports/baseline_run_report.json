@@ -1,47 +1,60 @@
 {
-  "completed_runs": 285,
+  "append_mode": true,
+  "appended_models": [
+    "chemprop",
+    "ngboost"
+  ],
+  "chemprop_integration": "Complete fixed-task Chemprop grid merged from the separately resumable runner.",
+  "completed_runs": 465,
   "failed_runs": [],
   "failure_label_policy": "No binary success/failure labels are created at this stage; molecule-level residuals are retained for evidence-based failure definitions.",
   "final_fit_policy": "After selection, preprocessing and the model are refit on training plus validation; the test partition is evaluated once.",
   "output_files": {
-    "hyperparameter_results_csv": {
-      "bytes": 161937,
-      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.csv"
+    "predictions_csv_gz": {
+      "bytes": 26658940,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.csv.gz"
     },
-    "hyperparameter_results_parquet": {
-      "bytes": 41670,
-      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.parquet"
+    "predictions_parquet": {
+      "bytes": 14434760,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.parquet"
     },
-    "model_results_csv": {
-      "bytes": 105697,
+    "results_csv": {
+      "bytes": 178992,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.csv"
     },
-    "model_results_parquet": {
-      "bytes": 40944,
+    "results_parquet": {
+      "bytes": 60814,
       "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/model_results.parquet"
     },
-    "test_predictions_csv": {
-      "bytes": 70067862,
-      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.csv"
+    "tuning_csv": {
+      "bytes": 259051,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.csv"
     },
-    "test_predictions_parquet": {
-      "bytes": 9594491,
-      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/test_predictions.parquet"
+    "tuning_parquet": {
+      "bytes": 63388,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/hyperparameter_results.parquet"
     }
   },
   "requested_feature_types": [
-    "rdkit_descriptors",
+    "maccs_fingerprints",
+    "molecular_graph",
     "morgan_fingerprints",
-    "maccs_fingerprints"
+    "rdkit_descriptors"
   ],
   "requested_models": [
+    "chemprop",
     "dummy",
-    "ridge",
-    "random_forest",
+    "elastic_net",
+    "esol",
     "extra_trees",
     "hist_gradient_boosting",
+    "knn",
+    "mlp",
+    "ngboost",
+    "random_forest",
+    "ridge",
     "svr",
-    "mlp"
+    "xgboost"
   ],
   "requested_repeats": [
     1,
@@ -51,9 +64,9 @@
     5
   ],
   "requested_strategies": [
+    "low_similarity",
     "random",
-    "scaffold",
-    "low_similarity"
+    "scaffold"
   ],
   "residual_definition": "true_log_s - predicted_log_s",
   "scikit_learn_version": "1.9.1",
@@ -178,9 +191,130 @@
     {
       "reason": "HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
       "run_id": "low_similarity_r5_maccs_fingerprints_hist_gradient_boosting"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r1_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r2_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r3_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r4_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r5_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r1_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r2_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r3_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r4_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r5_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r1_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r2_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r3_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r4_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r5_morgan_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r1_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r2_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r3_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r4_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "random_r5_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r1_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r2_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r3_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r4_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "scaffold_r5_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r1_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r2_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r3_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r4_maccs_fingerprints_esol"
+    },
+    {
+      "reason": "esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.",
+      "run_id": "low_similarity_r5_maccs_fingerprints_esol"
     }
   ],
   "status": "pass",
-  "test_prediction_rows": 255645,
-  "tuning_candidate_rows": 855
+  "test_prediction_rows": 417105,
+  "tuning_candidate_rows": 1335,
+  "xgboost_version": "3.2.0"
 }

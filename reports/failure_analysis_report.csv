@@ -1,14 +1,14 @@
 metric,value
 status,pass
 blocking_errors,[]
-prediction_rows,255645
-completed_runs,285
+prediction_rows,417105
+completed_runs,465
 molecules_with_held_out_predictions,6346
 molecule_summary_excludes_dummy,True
-meta_dataset_rows,285
+meta_dataset_rows,465
 distinct_tasks,15
-selection_eligible_rows,240
-predictor_columns,80
+selection_eligible_rows,420
+predictor_columns,96
 recommended_initial_predictors,x_model
 recommended_initial_predictors,x_feature_type
 recommended_initial_predictors,x_split_strategy
@@ -34,7 +34,7 @@ q_i_definition,q_i = 1 when absolute(true_log_s - predicted_log_s) is strictly g
 primary_threshold_interpretation,An absolute error above 1.0 log10(mol/L) corresponds to a solubility error larger than one order of magnitude. Thresholds 0.5 and 2.0 are retained for sensitivity analysis.
 predictor_leakage_policy,"All x_ columns are available before final test evaluation. Test-molecule structure and train-test chemical similarity may be used, but no held-out test logS value or test-error statistic is included in X."
 selection_outcome_policy,"Dummy regressors are retained as baselines but selection_eligible is false. Among eligible candidates, y_top3_candidate identifies the three lowest test-RMSE rows within each task, and y_rmse_regret_vs_best measures distance from the task winner."
-validation_policy,Future meta-model evaluation must hold out complete tasks or datasets. Randomly splitting the 180 run rows would leak repeated task-level meta-features.
+validation_policy,Future meta-model evaluation must hold out complete tasks or datasets. Randomly splitting the 465 run rows would leak repeated task-level meta-features.
 current_limitation,"The table contains 15 correlated tasks from one master benchmark. It is suitable for exploratory analysis and pipeline validation, not a final publishable meta-model. Source-holdout and external-dataset tasks must be added."
 meta_descriptors,MolWt
 meta_descriptors,MolLogP
@@ -42,23 +42,31 @@ meta_descriptors,TPSA
 meta_descriptors,FractionCSP3
 meta_descriptors,NumRotatableBonds
 meta_descriptors,RingCount
-output_files.prediction_failures_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/prediction_failures.csv
-output_files.prediction_failures_csv.bytes,80182325
+combined_meta_rows,940
+combined_meta_refreshed,True
+output_files.prediction_failures_csv_gz.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/prediction_failures.csv.gz
+output_files.prediction_failures_csv_gz.bytes,27286644
 output_files.prediction_failures_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/prediction_failures.parquet
-output_files.prediction_failures_parquet.bytes,9831851
+output_files.prediction_failures_parquet.bytes,14812003
 output_files.run_failure_summary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/run_failure_summary.csv
-output_files.run_failure_summary_csv.bytes,95647
+output_files.run_failure_summary_csv.bytes,155333
 output_files.run_failure_summary_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/run_failure_summary.parquet
-output_files.run_failure_summary_parquet.bytes,38894
+output_files.run_failure_summary_parquet.bytes,54862
 output_files.molecule_failure_summary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/molecule_failure_summary.csv
-output_files.molecule_failure_summary_csv.bytes,1633883
+output_files.molecule_failure_summary_csv.bytes,1813692
 output_files.molecule_failure_summary_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/molecule_failure_summary.parquet
-output_files.molecule_failure_summary_parquet.bytes,536008
+output_files.molecule_failure_summary_parquet.bytes,543939
 output_files.failure_group_summary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/failure_group_summary.csv
-output_files.failure_group_summary_csv.bytes,9354
+output_files.failure_group_summary_csv.bytes,15120
 output_files.meta_model_dataset_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset.csv
-output_files.meta_model_dataset_csv.bytes,421134
+output_files.meta_model_dataset_csv.bytes,696293
 output_files.meta_model_dataset_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset.parquet
-output_files.meta_model_dataset_parquet.bytes,121297
+output_files.meta_model_dataset_parquet.bytes,160505
 output_files.meta_dataset_dictionary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/reports/meta_dataset_dictionary.csv
-output_files.meta_dataset_dictionary_csv.bytes,11022
+output_files.meta_dataset_dictionary_csv.bytes,12417
+output_files.combined_meta_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset_with_source_holdouts.csv
+output_files.combined_meta_csv.bytes,1446335
+output_files.combined_meta_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset_with_source_holdouts.parquet
+output_files.combined_meta_parquet.bytes,240535
+output_files.combined_dictionary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/reports/meta_dataset_with_source_holdouts_dictionary.csv
+output_files.combined_dictionary_csv.bytes,12635

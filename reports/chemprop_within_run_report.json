@@ -1,0 +1,35 @@
+{
+  "complete_design": true,
+  "completed_runs": 15,
+  "design": "within",
+  "feature_type": "molecular_graph",
+  "final_fit_policy": "Unlike the classical models, Chemprop is not refit on training plus validation because validation is required for epoch selection and early stopping.",
+  "hardware_policy": "CPU execution with one model per task and no ensemble.",
+  "mean_test_rmse": 1.2921142149235685,
+  "model": "chemprop",
+  "output_files": {
+    "predictions_parquet": {
+      "bytes": 755909,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/chemprop_within_test_predictions.parquet"
+    },
+    "results_csv": {
+      "bytes": 8658,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/chemprop_within_model_results.csv"
+    },
+    "results_parquet": {
+      "bytes": 19627,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/chemprop_within_model_results.parquet"
+    },
+    "tuning_csv": {
+      "bytes": 5735,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/chemprop_within_hyperparameter_results.csv"
+    },
+    "tuning_parquet": {
+      "bytes": 7428,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/chemprop_within_hyperparameter_results.parquet"
+    }
+  },
+  "prediction_rows": 13455,
+  "status": "pass",
+  "training_policy": "One fixed Chemprop v2 D-MPNN architecture is trained on each fixed training set. The validation set controls early stopping; the test set is evaluated once."
+}

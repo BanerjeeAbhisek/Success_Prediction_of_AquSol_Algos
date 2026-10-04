@@ -45,6 +45,12 @@ MODEL_CLASSES = {
     "hist_gradient_boosting": "tree_ensemble",
     "svr": "kernel",
     "mlp": "neural_network",
+    "elastic_net": "linear",
+    "knn": "local_similarity",
+    "xgboost": "tree_ensemble",
+    "ngboost": "probabilistic_boosting",
+    "esol": "chemistry_equation",
+    "chemprop": "graph_neural_network",
 }
 
 DESCRIPTOR_SLUGS = {
