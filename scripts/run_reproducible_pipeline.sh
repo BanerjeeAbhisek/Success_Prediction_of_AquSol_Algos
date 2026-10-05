@@ -24,6 +24,12 @@ aquasol-build-source-holdouts
 aquasol-run-source-holdouts \
   --models dummy ridge random_forest extra_trees hist_gradient_boosting svr mlp
 
+aquasol-run-source-holdouts \
+  --models elastic_net knn xgboost ngboost esol \
+  --append
+
+aquasol-run-chemprop --design source --append-canonical
+
 aquasol-build-meta-dataset
 aquasol-build-reproducibility
 pytest

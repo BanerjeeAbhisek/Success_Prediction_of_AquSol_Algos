@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 from aquasol_meta.run_source_holdouts import (
     _concatenate_parquet_files,
@@ -142,3 +144,35 @@ def test_source_predictions_are_written_as_readable_partitioned_dataset(tmp_path
     assert combined_path.is_dir()
     assert combined["run_id"].tolist() == ["new_a", "old_a", "old_b"]
     assert set(combined["heldout_source"].astype(str)) == {"SOURCE_A", "SOURCE_B"}
+
+
+def test_partitioned_writer_promotes_string_and_large_string(tmp_path) -> None:
+    large_path = tmp_path / "large.parquet"
+    string_path = tmp_path / "string.parquet"
+    combined_path = tmp_path / "combined.parquet"
+    pq.write_table(
+        pa.table(
+            {
+                "run_id": pa.array(["old"], type=pa.large_string()),
+                "heldout_source": pa.array(["SOURCE_A"], type=pa.large_string()),
+            }
+        ),
+        large_path,
+    )
+    pq.write_table(
+        pa.table(
+            {
+                "run_id": pa.array(["new"], type=pa.string()),
+                "heldout_source": pa.array(["SOURCE_B"], type=pa.string()),
+            }
+        ),
+        string_path,
+    )
+
+    rows = _write_partitioned_prediction_dataset(
+        [large_path, string_path], combined_path
+    )
+    combined = pd.read_parquet(combined_path).sort_values("run_id")
+
+    assert rows == 2
+    assert combined["run_id"].tolist() == ["new", "old"]

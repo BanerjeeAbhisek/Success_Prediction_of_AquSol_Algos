@@ -41,6 +41,7 @@ EXCLUDED_PARTS = {
     ".ruff_cache",
     "__pycache__",
     "chemprop_cache",
+    "source_holdout_prediction_failures.parquet",
 }
 KEY_TABLES = {
     "master_observations": "data_processed/master_observations.parquet",
@@ -207,6 +208,10 @@ def build_reproducibility_artifacts(root: Path) -> dict[str, Path]:
         "pipeline_script": "scripts/run_reproducible_pipeline.sh",
         "notes": [
             "Chemprop cache files and checkpoints are excluded because they are regenerable.",
+            (
+                "The Git-ignored partitioned source prediction dataset is regenerable "
+                "and excluded from checksums."
+            ),
             "Neural-network results may not be bit-identical across hardware backends.",
             "No meta-model has been fitted at this milestone.",
         ],

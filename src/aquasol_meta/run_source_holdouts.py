@@ -25,7 +25,10 @@ from .run_baselines import _flatten_report, _write_table
 def _concatenate_parquet_files(sources: list[Path], destination: Path) -> int:
     if destination.exists():
         destination.unlink()
-    schema = pa.unify_schemas([pq.ParquetFile(source).schema_arrow for source in sources])
+    schema = pa.unify_schemas(
+        [pq.ParquetFile(source).schema_arrow for source in sources],
+        promote_options="permissive",
+    )
     writer: pq.ParquetWriter | None = None
     rows = 0
     try:
@@ -63,7 +66,10 @@ def _write_partitioned_prediction_dataset(
         else:
             destination.unlink()
     datasets = [ds.dataset(source, format="parquet", partitioning="hive") for source in sources]
-    schema = pa.unify_schemas([dataset.schema for dataset in datasets])
+    schema = pa.unify_schemas(
+        [dataset.schema for dataset in datasets],
+        promote_options="permissive",
+    )
     if "heldout_source" not in schema.names:
         raise ValueError("Source prediction dataset has no heldout_source column")
     rows = 0
@@ -134,6 +140,37 @@ def _task_inputs(task: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
         "include_primary_benchmark",
     ]
     return task[assignment_columns].copy(), task[target_columns].copy()
+
+
+def _rebuild_source_meta(
+    tasks: pd.DataFrame,
+    results: pd.DataFrame,
+    run_summary: pd.DataFrame,
+    descriptors: pd.DataFrame,
+) -> pd.DataFrame:
+    """Recompute rankings across every candidate in each complete source task."""
+    frames: list[pd.DataFrame] = []
+    for task_id, task in tasks.groupby("task_id", sort=True):
+        task_results = results.loc[results["task_id"].eq(task_id)]
+        task_summary = run_summary.loc[run_summary["task_id"].eq(task_id)]
+        if task_results.empty or set(task_results["run_id"]) != set(task_summary["run_id"]):
+            raise RuntimeError(f"Source task {task_id} has incomplete result coverage")
+        assignments, targets = _task_inputs(task)
+        task_meta = build_meta_model_dataset(
+            task_results,
+            task_summary,
+            assignments,
+            targets,
+            descriptors,
+        )
+        heldout_source = str(_single_value(task, "heldout_source", task_id))
+        task_meta.insert(2, "heldout_source", heldout_source)
+        task_meta["x_split_strategy"] = "source_holdout"
+        task_meta["x_evaluation_design"] = "source_holdout"
+        frames.append(task_meta)
+    return pd.concat(frames, ignore_index=True, sort=False).sort_values(
+        ["task_id", "x_feature_type", "x_model"], kind="stable"
+    ).reset_index(drop=True)
 
 
 def _combine_meta_datasets(
@@ -332,9 +369,7 @@ def build_source_holdout_model_artifacts(
     run_summary = run_summary.sort_values(["task_id", "run_id"], kind="stable").reset_index(
         drop=True
     )
-    source_meta = source_meta.sort_values(
-        ["task_id", "x_feature_type", "x_model"], kind="stable"
-    ).reset_index(drop=True)
+    source_meta = _rebuild_source_meta(tasks, results, run_summary, descriptors)
     if results["run_id"].duplicated().any():
         raise RuntimeError("Source model results contain duplicate run IDs")
     if tuning.duplicated(["run_id", "candidate"]).any():

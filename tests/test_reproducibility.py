@@ -31,6 +31,14 @@ def test_included_files_excludes_self_referential_reports_and_cache(tmp_path) ->
     cache = tmp_path / "results" / "chemprop_cache"
     cache.mkdir(parents=True)
     (cache / "checkpoint.pt").write_bytes(b"model")
+    source_predictions = (
+        tmp_path
+        / "results"
+        / "source_holdout_prediction_failures.parquet"
+        / "heldout_source=AQUA"
+    )
+    source_predictions.mkdir(parents=True)
+    (source_predictions / "part-0.parquet").write_bytes(b"predictions")
 
     included = {path.relative_to(tmp_path).as_posix() for path in _included_files(tmp_path)}
 

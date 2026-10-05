@@ -1,8 +1,8 @@
 {
   "checksum_algorithm": "SHA-256",
   "checksum_file": "reports/artifact_checksums.csv",
-  "checksummed_bytes": 377824664,
-  "checksummed_file_count": 118,
+  "checksummed_bytes": 310789178,
+  "checksummed_file_count": 123,
   "experiment": {
     "chemprop_parameters": [
       {
@@ -18,7 +18,7 @@
         "message_hidden_dim": 300
       }
     ],
-    "combined_meta_rows": 940,
+    "combined_meta_rows": 1240,
     "combined_tasks": 40,
     "feature_types": [
       "maccs_fingerprints",
@@ -48,7 +48,7 @@
       "svr": 45,
       "xgboost": 45
     },
-    "source_model_runs": 475,
+    "source_model_runs": 775,
     "source_repeats": [
       1,
       2,
@@ -94,7 +94,7 @@
     2.0
   ],
   "files_at_or_above_safety_threshold": [],
-  "generated_at_utc": "2026-10-04T21:01:35.204316+00:00",
+  "generated_at_utc": "2026-10-05T15:04:18.983361+00:00",
   "github_safety_threshold_bytes": 95000000,
   "locked_packages": {
     "ConfigArgParse": "1.8.0",
@@ -181,6 +181,7 @@
   "manifest_schema_version": 1,
   "notes": [
     "Chemprop cache files and checkpoints are excluded because they are regenerable.",
+    "The Git-ignored partitioned source prediction dataset is regenerable and excluded from checksums.",
     "Neural-network results may not be bit-identical across hardware backends.",
     "No meta-model has been fitted at this milestone."
   ],
@@ -194,7 +195,7 @@
   "table_counts": {
     "combined_meta_dataset": {
       "columns": 123,
-      "rows": 940
+      "rows": 1240
     },
     "master_observations": {
       "columns": 45,
@@ -221,8 +222,8 @@
       "rows": 259880
     },
     "source_meta_dataset": {
-      "columns": 107,
-      "rows": 475
+      "columns": 123,
+      "rows": 775
     },
     "split_assignments": {
       "columns": 7,

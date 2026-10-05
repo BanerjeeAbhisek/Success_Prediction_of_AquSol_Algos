@@ -31,7 +31,8 @@ group summaries with the `source_holdout_` prefix. The molecule-level source-hol
 failure labels are stored as the partitioned Parquet dataset
 `source_holdout_prediction_failures.parquet/`; pandas reads this directory with the same
 `pd.read_parquet(...)` call used for a single file. Its bounded part files remain below GitHub's
-100 MB per-file limit. A CSV copy is intentionally omitted.
+100 MB per-file limit. The approximately 145 MB derived directory is intentionally Git-ignored and
+can be regenerated; a CSV copy is intentionally omitted.
 
 `aquasol-run-chemprop` stores completed task shards in the Git-ignored `chemprop_cache/` directory
 so interrupted CPU runs can resume. Complete within-benchmark and source-holdout runs produce
@@ -39,4 +40,6 @@ so interrupted CPU runs can resume. Complete within-benchmark and source-holdout
 predictions are Parquet-only. A run using `--task-limit` writes explicitly named `*_partial_*`
 outputs, which are ignored by Git and must not be treated as the complete benchmark. For the
 within-benchmark design, `--append-canonical` retains these standalone files while also adding the
-15 Chemprop rows to `model_results.*`, `test_predictions.*`, and `hyperparameter_results.*`.
+15 Chemprop rows to `model_results.*`, `test_predictions.*`, and `hyperparameter_results.*`. For
+the source design, it adds 25 Chemprop runs to the source result, failure-label, source-meta and
+combined-meta artifacts.

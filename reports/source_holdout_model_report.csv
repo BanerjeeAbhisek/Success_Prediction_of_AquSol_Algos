@@ -1,7 +1,14 @@
 metric,value
+append_mode,True
+appended_models,chemprop
+appended_models,elastic_net
+appended_models,esol
+appended_models,knn
+appended_models,ngboost
+appended_models,xgboost
 combined_distinct_tasks,40
-combined_meta_rows,940
-completed_runs,475
+combined_meta_rows,1240
+completed_runs,775
 failed_runs,[]
 heldout_sources,AQUA
 heldout_sources,AqSolDB
@@ -9,45 +16,52 @@ heldout_sources,Delaney
 heldout_sources,OCHEM
 heldout_sources,PHYSPROP
 meta_validation_policy,Do not randomly split combined meta rows. Hold out complete heldout_source groups when evaluating generalization across datasets.
+output_files.results_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_model_results.csv
+output_files.results_csv.bytes,342450
+output_files.results_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_model_results.parquet
+output_files.results_parquet.bytes,88443
+output_files.predictions_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_prediction_failures.parquet
+output_files.predictions_parquet.bytes,144633321
+output_files.tuning_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_hyperparameter_results.csv
+output_files.tuning_csv.bytes,530609
+output_files.tuning_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_hyperparameter_results.parquet
+output_files.tuning_parquet.bytes,103970
+output_files.run_summary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_run_failure_summary.csv
+output_files.run_summary_csv.bytes,302558
+output_files.run_summary_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_run_failure_summary.parquet
+output_files.run_summary_parquet.bytes,85161
+output_files.group_summary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_failure_group_summary.csv
+output_files.group_summary_csv.bytes,27486
+output_files.source_meta_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/source_holdout_meta_model_dataset.csv
+output_files.source_meta_csv.bytes,1200808
+output_files.source_meta_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/source_holdout_meta_model_dataset.parquet
+output_files.source_meta_parquet.bytes,206800
+output_files.combined_meta_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset_with_source_holdouts.csv
+output_files.combined_meta_csv.bytes,1912315
+output_files.combined_meta_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset_with_source_holdouts.parquet
+output_files.combined_meta_parquet.bytes,287588
 output_files.combined_dictionary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/reports/meta_dataset_with_source_holdouts_dictionary.csv
 output_files.combined_dictionary_csv.bytes,12635
-output_files.combined_meta_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset_with_source_holdouts.csv
-output_files.combined_meta_csv.bytes,1446335
-output_files.combined_meta_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/meta_model_dataset_with_source_holdouts.parquet
-output_files.combined_meta_parquet.bytes,240535
-output_files.source_group_summary_csv.bytes,17010
-output_files.source_group_summary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_failure_group_summary.csv
-output_files.source_meta_csv.bytes,725987
-output_files.source_meta_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/source_holdout_meta_model_dataset.csv
-output_files.source_meta_parquet.bytes,149755
-output_files.source_meta_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/data_processed/source_holdout_meta_model_dataset.parquet
-output_files.source_model_results_csv.bytes,203246
-output_files.source_model_results_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_model_results.csv
-output_files.source_model_results_parquet.bytes,58108
-output_files.source_model_results_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_model_results.parquet
-output_files.source_predictions_parquet.bytes,73371220
-output_files.source_predictions_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_prediction_failures.parquet
-output_files.source_run_summary_csv.bytes,185973
-output_files.source_run_summary_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_run_failure_summary.csv
-output_files.source_run_summary_parquet.bytes,59038
-output_files.source_run_summary_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_run_failure_summary.parquet
-output_files.source_tuning_csv.bytes,333271
-output_files.source_tuning_csv.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_hyperparameter_results.csv
-output_files.source_tuning_parquet.bytes,67064
-output_files.source_tuning_parquet.path,/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/source_holdout_hyperparameter_results.parquet
-prediction_rows,1897530
-prediction_storage_policy,Molecule-level source-holdout predictions and q_i labels are stored in one compressed Parquet file. A CSV copy is intentionally omitted because the estimated size exceeds GitHub's 100 MB per-file limit.
+prediction_rows,3095970
+prediction_storage_policy,"Molecule-level source-holdout predictions and q_i labels are stored as a compressed Parquet dataset partitioned by held-out source, with bounded part files below 95 MB. A CSV copy is intentionally omitted because it would exceed GitHub's 100 MB limit."
 remaining_limitation,"The five source datasets overlap in chemical content. Molecule leakage is blocked within every task, but genuinely external datasets are still needed for the final publication claim."
-requested_feature_types,rdkit_descriptors
-requested_feature_types,morgan_fingerprints
 requested_feature_types,maccs_fingerprints
+requested_feature_types,molecular_graph
+requested_feature_types,morgan_fingerprints
+requested_feature_types,rdkit_descriptors
+requested_models,chemprop
 requested_models,dummy
-requested_models,ridge
-requested_models,random_forest
+requested_models,elastic_net
+requested_models,esol
 requested_models,extra_trees
 requested_models,hist_gradient_boosting
-requested_models,svr
+requested_models,knn
 requested_models,mlp
+requested_models,ngboost
+requested_models,random_forest
+requested_models,ridge
+requested_models,svr
+requested_models,xgboost
 skipped_runs.0.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
 skipped_runs.0.run_id,source_holdout_aqsoldb_r1_morgan_fingerprints_hist_gradient_boosting
 skipped_runs.1.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
@@ -148,8 +162,208 @@ skipped_runs.48.reason,HistGradientBoosting is restricted to compact RDKit descr
 skipped_runs.48.run_id,source_holdout_physprop_r5_morgan_fingerprints_hist_gradient_boosting
 skipped_runs.49.reason,HistGradientBoosting is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
 skipped_runs.49.run_id,source_holdout_physprop_r5_maccs_fingerprints_hist_gradient_boosting
-source_meta_rows,475
+skipped_runs.50.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.50.run_id,source_holdout_aqsoldb_r1_morgan_fingerprints_esol
+skipped_runs.51.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.51.run_id,source_holdout_aqsoldb_r1_maccs_fingerprints_esol
+skipped_runs.52.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.52.run_id,source_holdout_aqsoldb_r2_morgan_fingerprints_esol
+skipped_runs.53.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.53.run_id,source_holdout_aqsoldb_r2_maccs_fingerprints_esol
+skipped_runs.54.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.54.run_id,source_holdout_aqsoldb_r3_morgan_fingerprints_esol
+skipped_runs.55.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.55.run_id,source_holdout_aqsoldb_r3_maccs_fingerprints_esol
+skipped_runs.56.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.56.run_id,source_holdout_aqsoldb_r4_morgan_fingerprints_esol
+skipped_runs.57.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.57.run_id,source_holdout_aqsoldb_r4_maccs_fingerprints_esol
+skipped_runs.58.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.58.run_id,source_holdout_aqsoldb_r5_morgan_fingerprints_esol
+skipped_runs.59.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.59.run_id,source_holdout_aqsoldb_r5_maccs_fingerprints_esol
+skipped_runs.60.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.60.run_id,source_holdout_aqua_r1_morgan_fingerprints_esol
+skipped_runs.61.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.61.run_id,source_holdout_aqua_r1_maccs_fingerprints_esol
+skipped_runs.62.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.62.run_id,source_holdout_aqua_r2_morgan_fingerprints_esol
+skipped_runs.63.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.63.run_id,source_holdout_aqua_r2_maccs_fingerprints_esol
+skipped_runs.64.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.64.run_id,source_holdout_aqua_r3_morgan_fingerprints_esol
+skipped_runs.65.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.65.run_id,source_holdout_aqua_r3_maccs_fingerprints_esol
+skipped_runs.66.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.66.run_id,source_holdout_aqua_r4_morgan_fingerprints_esol
+skipped_runs.67.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.67.run_id,source_holdout_aqua_r4_maccs_fingerprints_esol
+skipped_runs.68.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.68.run_id,source_holdout_aqua_r5_morgan_fingerprints_esol
+skipped_runs.69.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.69.run_id,source_holdout_aqua_r5_maccs_fingerprints_esol
+skipped_runs.70.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.70.run_id,source_holdout_delaney_r1_morgan_fingerprints_esol
+skipped_runs.71.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.71.run_id,source_holdout_delaney_r1_maccs_fingerprints_esol
+skipped_runs.72.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.72.run_id,source_holdout_delaney_r2_morgan_fingerprints_esol
+skipped_runs.73.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.73.run_id,source_holdout_delaney_r2_maccs_fingerprints_esol
+skipped_runs.74.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.74.run_id,source_holdout_delaney_r3_morgan_fingerprints_esol
+skipped_runs.75.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.75.run_id,source_holdout_delaney_r3_maccs_fingerprints_esol
+skipped_runs.76.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.76.run_id,source_holdout_delaney_r4_morgan_fingerprints_esol
+skipped_runs.77.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.77.run_id,source_holdout_delaney_r4_maccs_fingerprints_esol
+skipped_runs.78.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.78.run_id,source_holdout_delaney_r5_morgan_fingerprints_esol
+skipped_runs.79.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.79.run_id,source_holdout_delaney_r5_maccs_fingerprints_esol
+skipped_runs.80.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.80.run_id,source_holdout_ochem_r1_morgan_fingerprints_esol
+skipped_runs.81.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.81.run_id,source_holdout_ochem_r1_maccs_fingerprints_esol
+skipped_runs.82.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.82.run_id,source_holdout_ochem_r2_morgan_fingerprints_esol
+skipped_runs.83.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.83.run_id,source_holdout_ochem_r2_maccs_fingerprints_esol
+skipped_runs.84.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.84.run_id,source_holdout_ochem_r3_morgan_fingerprints_esol
+skipped_runs.85.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.85.run_id,source_holdout_ochem_r3_maccs_fingerprints_esol
+skipped_runs.86.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.86.run_id,source_holdout_ochem_r4_morgan_fingerprints_esol
+skipped_runs.87.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.87.run_id,source_holdout_ochem_r4_maccs_fingerprints_esol
+skipped_runs.88.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.88.run_id,source_holdout_ochem_r5_morgan_fingerprints_esol
+skipped_runs.89.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.89.run_id,source_holdout_ochem_r5_maccs_fingerprints_esol
+skipped_runs.90.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.90.run_id,source_holdout_physprop_r1_morgan_fingerprints_esol
+skipped_runs.91.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.91.run_id,source_holdout_physprop_r1_maccs_fingerprints_esol
+skipped_runs.92.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.92.run_id,source_holdout_physprop_r2_morgan_fingerprints_esol
+skipped_runs.93.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.93.run_id,source_holdout_physprop_r2_maccs_fingerprints_esol
+skipped_runs.94.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.94.run_id,source_holdout_physprop_r3_morgan_fingerprints_esol
+skipped_runs.95.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.95.run_id,source_holdout_physprop_r3_maccs_fingerprints_esol
+skipped_runs.96.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.96.run_id,source_holdout_physprop_r4_morgan_fingerprints_esol
+skipped_runs.97.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.97.run_id,source_holdout_physprop_r4_maccs_fingerprints_esol
+skipped_runs.98.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.98.run_id,source_holdout_physprop_r5_morgan_fingerprints_esol
+skipped_runs.99.reason,esol is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.99.run_id,source_holdout_physprop_r5_maccs_fingerprints_esol
+skipped_runs.100.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.100.run_id,source_holdout_aqsoldb_r1_morgan_fingerprints_ngboost
+skipped_runs.101.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.101.run_id,source_holdout_aqsoldb_r1_maccs_fingerprints_ngboost
+skipped_runs.102.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.102.run_id,source_holdout_aqsoldb_r2_morgan_fingerprints_ngboost
+skipped_runs.103.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.103.run_id,source_holdout_aqsoldb_r2_maccs_fingerprints_ngboost
+skipped_runs.104.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.104.run_id,source_holdout_aqsoldb_r3_morgan_fingerprints_ngboost
+skipped_runs.105.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.105.run_id,source_holdout_aqsoldb_r3_maccs_fingerprints_ngboost
+skipped_runs.106.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.106.run_id,source_holdout_aqsoldb_r4_morgan_fingerprints_ngboost
+skipped_runs.107.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.107.run_id,source_holdout_aqsoldb_r4_maccs_fingerprints_ngboost
+skipped_runs.108.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.108.run_id,source_holdout_aqsoldb_r5_morgan_fingerprints_ngboost
+skipped_runs.109.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.109.run_id,source_holdout_aqsoldb_r5_maccs_fingerprints_ngboost
+skipped_runs.110.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.110.run_id,source_holdout_aqua_r1_morgan_fingerprints_ngboost
+skipped_runs.111.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.111.run_id,source_holdout_aqua_r1_maccs_fingerprints_ngboost
+skipped_runs.112.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.112.run_id,source_holdout_aqua_r2_morgan_fingerprints_ngboost
+skipped_runs.113.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.113.run_id,source_holdout_aqua_r2_maccs_fingerprints_ngboost
+skipped_runs.114.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.114.run_id,source_holdout_aqua_r3_morgan_fingerprints_ngboost
+skipped_runs.115.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.115.run_id,source_holdout_aqua_r3_maccs_fingerprints_ngboost
+skipped_runs.116.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.116.run_id,source_holdout_aqua_r4_morgan_fingerprints_ngboost
+skipped_runs.117.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.117.run_id,source_holdout_aqua_r4_maccs_fingerprints_ngboost
+skipped_runs.118.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.118.run_id,source_holdout_aqua_r5_morgan_fingerprints_ngboost
+skipped_runs.119.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.119.run_id,source_holdout_aqua_r5_maccs_fingerprints_ngboost
+skipped_runs.120.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.120.run_id,source_holdout_delaney_r1_morgan_fingerprints_ngboost
+skipped_runs.121.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.121.run_id,source_holdout_delaney_r1_maccs_fingerprints_ngboost
+skipped_runs.122.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.122.run_id,source_holdout_delaney_r2_morgan_fingerprints_ngboost
+skipped_runs.123.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.123.run_id,source_holdout_delaney_r2_maccs_fingerprints_ngboost
+skipped_runs.124.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.124.run_id,source_holdout_delaney_r3_morgan_fingerprints_ngboost
+skipped_runs.125.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.125.run_id,source_holdout_delaney_r3_maccs_fingerprints_ngboost
+skipped_runs.126.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.126.run_id,source_holdout_delaney_r4_morgan_fingerprints_ngboost
+skipped_runs.127.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.127.run_id,source_holdout_delaney_r4_maccs_fingerprints_ngboost
+skipped_runs.128.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.128.run_id,source_holdout_delaney_r5_morgan_fingerprints_ngboost
+skipped_runs.129.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.129.run_id,source_holdout_delaney_r5_maccs_fingerprints_ngboost
+skipped_runs.130.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.130.run_id,source_holdout_ochem_r1_morgan_fingerprints_ngboost
+skipped_runs.131.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.131.run_id,source_holdout_ochem_r1_maccs_fingerprints_ngboost
+skipped_runs.132.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.132.run_id,source_holdout_ochem_r2_morgan_fingerprints_ngboost
+skipped_runs.133.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.133.run_id,source_holdout_ochem_r2_maccs_fingerprints_ngboost
+skipped_runs.134.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.134.run_id,source_holdout_ochem_r3_morgan_fingerprints_ngboost
+skipped_runs.135.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.135.run_id,source_holdout_ochem_r3_maccs_fingerprints_ngboost
+skipped_runs.136.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.136.run_id,source_holdout_ochem_r4_morgan_fingerprints_ngboost
+skipped_runs.137.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.137.run_id,source_holdout_ochem_r4_maccs_fingerprints_ngboost
+skipped_runs.138.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.138.run_id,source_holdout_ochem_r5_morgan_fingerprints_ngboost
+skipped_runs.139.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.139.run_id,source_holdout_ochem_r5_maccs_fingerprints_ngboost
+skipped_runs.140.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.140.run_id,source_holdout_physprop_r1_morgan_fingerprints_ngboost
+skipped_runs.141.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.141.run_id,source_holdout_physprop_r1_maccs_fingerprints_ngboost
+skipped_runs.142.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.142.run_id,source_holdout_physprop_r2_morgan_fingerprints_ngboost
+skipped_runs.143.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.143.run_id,source_holdout_physprop_r2_maccs_fingerprints_ngboost
+skipped_runs.144.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.144.run_id,source_holdout_physprop_r3_morgan_fingerprints_ngboost
+skipped_runs.145.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.145.run_id,source_holdout_physprop_r3_maccs_fingerprints_ngboost
+skipped_runs.146.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.146.run_id,source_holdout_physprop_r4_morgan_fingerprints_ngboost
+skipped_runs.147.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.147.run_id,source_holdout_physprop_r4_maccs_fingerprints_ngboost
+skipped_runs.148.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.148.run_id,source_holdout_physprop_r5_morgan_fingerprints_ngboost
+skipped_runs.149.reason,ngboost is restricted to compact RDKit descriptors rather than high-dimensional binary fingerprints.
+skipped_runs.149.run_id,source_holdout_physprop_r5_maccs_fingerprints_ngboost
+source_meta_rows,775
 status,pass
 task_count,25
-tuning_candidate_rows,1425
-combined_meta_refreshed_after_within_update,True
+tuning_candidate_rows,2225
+chemprop_integration,Complete source-holdout Chemprop grid merged from the resumable runner.

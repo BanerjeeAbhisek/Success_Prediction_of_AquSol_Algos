@@ -13,8 +13,20 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from .modeling import regression_metrics
+from .failure_meta import (
+    add_failure_labels,
+    build_failure_group_summary,
+    build_meta_data_dictionary,
+    build_run_failure_summary,
+)
+from .modeling import ADDITIONAL_MODELS, regression_metrics
 from .run_baselines import _flatten_report, _write_table
+from .run_source_holdouts import (
+    _combine_meta_datasets,
+    _path_size,
+    _rebuild_source_meta,
+    _write_partitioned_prediction_dataset,
+)
 
 CHEMPROP_MODEL = "chemprop"
 CHEMPROP_FEATURE_TYPE = "molecular_graph"
@@ -586,6 +598,212 @@ def _append_within_to_canonical(
     return True
 
 
+def _append_source_to_canonical(
+    root: Path,
+    chemprop_results: pd.DataFrame,
+    chemprop_predictions: pd.DataFrame,
+    chemprop_tuning: pd.DataFrame,
+) -> bool:
+    """Append a complete source Chemprop grid and rebuild source meta-artifacts."""
+    results_dir = root / "results"
+    data_dir = root / "data_processed"
+    reports_dir = root / "reports"
+    paths = {
+        "results_csv": results_dir / "source_holdout_model_results.csv",
+        "results_parquet": results_dir / "source_holdout_model_results.parquet",
+        "predictions_parquet": results_dir / "source_holdout_prediction_failures.parquet",
+        "tuning_csv": results_dir / "source_holdout_hyperparameter_results.csv",
+        "tuning_parquet": results_dir / "source_holdout_hyperparameter_results.parquet",
+        "run_summary_csv": results_dir / "source_holdout_run_failure_summary.csv",
+        "run_summary_parquet": results_dir / "source_holdout_run_failure_summary.parquet",
+        "group_summary_csv": results_dir / "source_holdout_failure_group_summary.csv",
+        "source_meta_csv": data_dir / "source_holdout_meta_model_dataset.csv",
+        "source_meta_parquet": data_dir / "source_holdout_meta_model_dataset.parquet",
+        "combined_meta_csv": data_dir / "meta_model_dataset_with_source_holdouts.csv",
+        "combined_meta_parquet": data_dir
+        / "meta_model_dataset_with_source_holdouts.parquet",
+        "combined_dictionary_csv": reports_dir
+        / "meta_dataset_with_source_holdouts_dictionary.csv",
+        "report_json": reports_dir / "source_holdout_model_report.json",
+        "report_csv": reports_dir / "source_holdout_model_report.csv",
+    }
+    required = [
+        paths["results_parquet"],
+        paths["predictions_parquet"],
+        paths["tuning_parquet"],
+        paths["run_summary_parquet"],
+        paths["source_meta_parquet"],
+        paths["report_json"],
+        data_dir / "meta_model_dataset.parquet",
+        data_dir / "source_holdout_tasks.parquet",
+        data_dir / "rdkit_descriptors.parquet",
+    ]
+    missing = [str(path) for path in required if not path.exists()]
+    if missing:
+        raise FileNotFoundError(
+            "Cannot integrate source Chemprop because files are missing:\n- "
+            + "\n- ".join(missing)
+        )
+
+    existing_results = pd.read_parquet(paths["results_parquet"])
+    overlap = set(existing_results["run_id"]).intersection(chemprop_results["run_id"])
+    if overlap:
+        if overlap == set(chemprop_results["run_id"]):
+            return False
+        raise ValueError(
+            "Canonical source results contain only part of the Chemprop grid; "
+            "refusing a partial merge"
+        )
+
+    labeled = add_failure_labels(chemprop_predictions)
+    new_run_summary = build_run_failure_summary(labeled).merge(
+        chemprop_results[["run_id", "task_id", "heldout_source"]],
+        on="run_id",
+        how="left",
+        validate="one_to_one",
+    )
+    tasks = pd.read_parquet(data_dir / "source_holdout_tasks.parquet")
+    descriptors = pd.read_parquet(data_dir / "rdkit_descriptors.parquet")
+
+    results = pd.concat([existing_results, chemprop_results], ignore_index=True).sort_values(
+        ["task_id", "feature_type", "model"], kind="stable"
+    ).reset_index(drop=True)
+    tuning = pd.concat(
+        [pd.read_parquet(paths["tuning_parquet"]), chemprop_tuning], ignore_index=True
+    ).sort_values(["task_id", "run_id", "candidate"], kind="stable").reset_index(drop=True)
+    run_summary = pd.concat(
+        [pd.read_parquet(paths["run_summary_parquet"]), new_run_summary],
+        ignore_index=True,
+        sort=False,
+    ).sort_values(["task_id", "run_id"], kind="stable").reset_index(drop=True)
+    source_meta = _rebuild_source_meta(tasks, results, run_summary, descriptors)
+    if results["run_id"].duplicated().any():
+        raise RuntimeError("Integrated source results contain duplicate run IDs")
+    if tuning.duplicated(["run_id", "candidate"]).any():
+        raise RuntimeError("Integrated source tuning contains duplicate run/candidate rows")
+    if run_summary["run_id"].duplicated().any():
+        raise RuntimeError("Integrated source summaries contain duplicate run IDs")
+    if source_meta["run_id"].duplicated().any():
+        raise RuntimeError("Integrated source meta-data contain duplicate run IDs")
+    if set(results["run_id"]) != set(run_summary["run_id"]) or set(results["run_id"]) != set(
+        source_meta["run_id"]
+    ):
+        raise RuntimeError("Integrated source artifacts cover different run IDs")
+
+    base_meta = pd.read_parquet(data_dir / "meta_model_dataset.parquet")
+    combined_meta = _combine_meta_datasets(base_meta, source_meta)
+    dictionary = build_meta_data_dictionary(combined_meta)
+    group_summary = build_failure_group_summary(run_summary).merge(
+        run_summary[["split_strategy", "heldout_source"]].drop_duplicates(),
+        on="split_strategy",
+        how="left",
+        validate="many_to_one",
+    )
+    group_summary = group_summary[
+        ["heldout_source", *[column for column in group_summary if column != "heldout_source"]]
+    ]
+
+    with tempfile.TemporaryDirectory(
+        prefix="aquasol-source-chemprop-integration-", dir=results_dir
+    ) as temporary:
+        staging = Path(temporary)
+        new_predictions_path = staging / "new_predictions.parquet"
+        labeled.to_parquet(new_predictions_path, index=False, compression="zstd")
+        staged_predictions = staging / "partitioned_predictions.parquet"
+        prediction_rows = _write_partitioned_prediction_dataset(
+            [paths["predictions_parquet"], new_predictions_path],
+            staged_predictions,
+        )
+        table_keys = (
+            "results_csv",
+            "results_parquet",
+            "tuning_csv",
+            "tuning_parquet",
+            "run_summary_csv",
+            "run_summary_parquet",
+            "group_summary_csv",
+            "source_meta_csv",
+            "source_meta_parquet",
+            "combined_meta_csv",
+            "combined_meta_parquet",
+            "combined_dictionary_csv",
+        )
+        _write_table(
+            results,
+            staging / paths["results_csv"].name,
+            staging / paths["results_parquet"].name,
+        )
+        _write_table(
+            tuning,
+            staging / paths["tuning_csv"].name,
+            staging / paths["tuning_parquet"].name,
+        )
+        _write_table(
+            run_summary,
+            staging / paths["run_summary_csv"].name,
+            staging / paths["run_summary_parquet"].name,
+        )
+        group_summary.to_csv(staging / paths["group_summary_csv"].name, index=False)
+        _write_table(
+            source_meta,
+            staging / paths["source_meta_csv"].name,
+            staging / paths["source_meta_parquet"].name,
+        )
+        _write_table(
+            combined_meta,
+            staging / paths["combined_meta_csv"].name,
+            staging / paths["combined_meta_parquet"].name,
+        )
+        dictionary.to_csv(
+            staging / paths["combined_dictionary_csv"].name, index=False
+        )
+        backup = staging / "previous_predictions.parquet"
+        paths["predictions_parquet"].rename(backup)
+        try:
+            staged_predictions.rename(paths["predictions_parquet"])
+            for key in table_keys:
+                (staging / paths[key].name).replace(paths[key])
+        except Exception:
+            if paths["predictions_parquet"].exists():
+                shutil.rmtree(paths["predictions_parquet"])
+            backup.rename(paths["predictions_parquet"])
+            raise
+
+    report = json.loads(paths["report_json"].read_text(encoding="utf-8"))
+    added_models = set(ADDITIONAL_MODELS).intersection(results["model"].unique())
+    added_models.add(CHEMPROP_MODEL)
+    report.update(
+        {
+            "status": "pass",
+            "append_mode": True,
+            "appended_models": sorted(added_models),
+            "completed_runs": int(len(results)),
+            "prediction_rows": int(prediction_rows),
+            "tuning_candidate_rows": int(len(tuning)),
+            "source_meta_rows": int(len(source_meta)),
+            "combined_meta_rows": int(len(combined_meta)),
+            "combined_distinct_tasks": int(combined_meta["task_id"].nunique()),
+            "requested_models": sorted(str(value) for value in results["model"].unique()),
+            "requested_feature_types": sorted(
+                str(value) for value in results["feature_type"].unique()
+            ),
+            "chemprop_integration": (
+                "Complete source-holdout Chemprop grid merged from the resumable runner."
+            ),
+        }
+    )
+    report["output_files"] = {
+        key: {"path": str(path), "bytes": int(_path_size(path))}
+        for key, path in paths.items()
+        if key not in {"report_json", "report_csv"}
+    }
+    paths["report_json"].write_text(
+        json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    _flatten_report(report).to_csv(paths["report_csv"], index=False)
+    return True
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Run a resumable Chemprop D-MPNN benchmark on the fixed chemical tasks."
@@ -682,11 +900,12 @@ def main() -> None:
         complete_design=set(selected_ids) == set(all_task_ids),
     )
     if args.append_canonical:
-        if args.design != "within":
-            raise ValueError("--append-canonical currently supports only --design within")
         if set(selected_ids) != set(all_task_ids):
-            raise ValueError("--append-canonical requires the complete within-task design")
-        appended = _append_within_to_canonical(root, results, predictions, tuning)
+            raise ValueError("--append-canonical requires the complete task design")
+        if args.design == "within":
+            appended = _append_within_to_canonical(root, results, predictions, tuning)
+        else:
+            appended = _append_source_to_canonical(root, results, predictions, tuning)
         print(
             "Chemprop canonical integration completed."
             if appended
