@@ -1,6 +1,6 @@
 metric,value
 manifest_schema_version,1
-generated_at_utc,2026-10-07T17:19:30.761386+00:00
+generated_at_utc,2026-10-07T17:34:24.417339+00:00
 status,pass
 python.version,"3.11.4 (v3.11.4:d2340ef257, Jun  6 2023, 19:15:51) [Clang 13.0.0 (clang-1300.0.29.30)]"
 python.implementation,CPython
@@ -111,6 +111,12 @@ table_counts.meta_model_oos_predictions.rows,2800
 table_counts.meta_model_oos_predictions.columns,16
 table_counts.meta_model_selected_candidates.rows,275
 table_counts.meta_model_selected_candidates.columns,14
+table_counts.sc2019_external_inputs.rows,132
+table_counts.sc2019_external_inputs.columns,17
+table_counts.sc2019_external_labels.rows,132
+table_counts.sc2019_external_labels.columns,7
+table_counts.sc2019_overlap_audit.rows,132
+table_counts.sc2019_overlap_audit.columns,14
 experiment.within_model_runs,465
 experiment.within_prediction_rows,417105
 experiment.within_tasks,15
@@ -185,6 +191,11 @@ experiment.meta_model_selectors,meta_random_forest
 experiment.meta_model_selectors,oracle
 experiment.meta_model_selectors,training_source_best
 experiment.meta_model_selectors,validation_rmse
+experiment.sc2019_external_rows,132
+experiment.sc2019_external_tasks,sc2019_loose
+experiment.sc2019_external_tasks,sc2019_tight
+experiment.sc2019_exact_raw_collection_overlaps,101
+experiment.sc2019_exact_primary_training_overlaps,48
 experiment.chemprop_parameters.0.architecture,D-MPNN
 experiment.chemprop_parameters.0.batch_size,64
 experiment.chemprop_parameters.0.depth,3
@@ -201,8 +212,8 @@ failure_thresholds_log_s,1.0
 failure_thresholds_log_s,2.0
 checksum_algorithm,SHA-256
 checksum_file,reports/artifact_checksums.csv
-checksummed_file_count,143
-checksummed_bytes,311947816
+checksummed_file_count,158
+checksummed_bytes,313592383
 github_safety_threshold_bytes,95000000
 files_at_or_above_safety_threshold,[]
 pipeline_script,scripts/run_reproducible_pipeline.sh
@@ -210,3 +221,4 @@ notes,Chemprop cache files and checkpoints are excluded because they are regener
 notes,The Git-ignored partitioned source prediction dataset is regenerable and excluded from checksums.
 notes,Neural-network results may not be bit-identical across hardware backends.
 notes,Meta-model assessment holds out complete experimental sources.
+notes,SC2019 external labels are stored separately and are not joined to the training master.

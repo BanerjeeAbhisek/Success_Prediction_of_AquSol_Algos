@@ -333,6 +333,22 @@ paired source-bootstrap uncertainty and a feature ablation separating candidate 
 validation performance and solubility-specific chemistry-shift predictors. These diagnostics are
 essential: a lower point estimate alone is not evidence that the meta-selector generalizes.
 
+## Prepare the locked SC2019 external test
+
+Download the immutable Zenodo archive, import only the published tight and loose challenge sets,
+standardize their structures and audit overlap with the internal benchmark using:
+
+```bash
+aquasol-import-sc2019
+```
+
+The importer verifies the published archive checksum and writes label-free inputs, a separate label
+table, freshly calculated RDKit representations, an exact-overlap audit and a mandatory training
+exclusion list under `external_data/sc2019/`. It does not append external records to the master
+dataset. Future external model fitting must remove every molecule in
+`sc2019_training_exclusions.csv` before fitting and must not read the external label table until all
+candidate predictions and meta-model selections have been frozen.
+
 ## Run tests
 
 ```bash
@@ -349,10 +365,11 @@ python -m pip install -r requirements-lock.txt
 python -m pip install -e . --no-deps
 ```
 
-The complete command order for rebuilding the current milestone from `Data/` is recorded in
+The complete command order for rebuilding the current milestone from `Data/` and the immutable
+external Zenodo record is recorded in
 `scripts/run_reproducible_pipeline.sh`. It deliberately reproduces the current experimental scope:
 all 13 model families for both the within-benchmark and source-holdout comparisons, followed by the
-strict leave-one-source-out meta-model evaluation.
+strict leave-one-source-out meta-model evaluation and the SC2019 external-data overlap audit.
 
 After any intentional artifact change, regenerate the audit snapshot with:
 
@@ -377,6 +394,7 @@ This stage prepares and audits the data, encodes a transparent first target-reso
 generates reproducible structure-derived features, fixes leakage-checked benchmark splits, runs the
 complete core baseline grid, constructs molecule- and run-level failure tables, and supports strict
 source-holdout and meta-model evaluation. The current five-source result is a proof of concept;
-genuinely external-dataset tasks remain necessary before claiming definitive generalization.
+SC2019 is now prepared as a leakage-audited external test but has not yet been used for candidate
+fitting or final evaluation.
 Measurement-condition and provenance columns remain audit variables unless a specifically defined
 conditional-solubility task makes them available at prediction time.

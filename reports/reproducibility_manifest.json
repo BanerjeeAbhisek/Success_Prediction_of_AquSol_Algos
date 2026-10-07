@@ -1,8 +1,8 @@
 {
   "checksum_algorithm": "SHA-256",
   "checksum_file": "reports/artifact_checksums.csv",
-  "checksummed_bytes": 311947816,
-  "checksummed_file_count": 143,
+  "checksummed_bytes": 313592383,
+  "checksummed_file_count": 158,
   "experiment": {
     "chemprop_parameters": [
       {
@@ -76,6 +76,13 @@
       "svr": 45,
       "xgboost": 45
     },
+    "sc2019_exact_primary_training_overlaps": 48,
+    "sc2019_exact_raw_collection_overlaps": 101,
+    "sc2019_external_rows": 132,
+    "sc2019_external_tasks": [
+      "sc2019_loose",
+      "sc2019_tight"
+    ],
     "source_model_runs": 775,
     "source_repeats": [
       1,
@@ -122,7 +129,7 @@
     2.0
   ],
   "files_at_or_above_safety_threshold": [],
-  "generated_at_utc": "2026-10-07T17:19:30.761386+00:00",
+  "generated_at_utc": "2026-10-07T17:34:24.417339+00:00",
   "github_safety_threshold_bytes": 95000000,
   "locked_packages": {
     "ConfigArgParse": "1.8.0",
@@ -211,7 +218,8 @@
     "Chemprop cache files and checkpoints are excluded because they are regenerable.",
     "The Git-ignored partitioned source prediction dataset is regenerable and excluded from checksums.",
     "Neural-network results may not be bit-identical across hardware backends.",
-    "Meta-model assessment holds out complete experimental sources."
+    "Meta-model assessment holds out complete experimental sources.",
+    "SC2019 external labels are stored separately and are not joined to the training master."
   ],
   "pipeline_script": "scripts/run_reproducible_pipeline.sh",
   "python": {
@@ -252,6 +260,18 @@
     "run_failure_summary": {
       "columns": 20,
       "rows": 465
+    },
+    "sc2019_external_inputs": {
+      "columns": 17,
+      "rows": 132
+    },
+    "sc2019_external_labels": {
+      "columns": 7,
+      "rows": 132
+    },
+    "sc2019_overlap_audit": {
+      "columns": 14,
+      "rows": 132
     },
     "source_holdout_tasks": {
       "columns": 17,

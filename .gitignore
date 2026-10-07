@@ -8,3 +8,4 @@ __pycache__/
 results/chemprop_cache/
 results/chemprop_*_partial_*
 reports/chemprop_*_partial_*
+external_data/sc2019/raw/

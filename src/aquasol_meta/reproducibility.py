@@ -29,6 +29,7 @@ ROOT_FILES = (
 INCLUDED_DIRECTORIES = (
     "Data",
     "data_processed",
+    "external_data",
     "reports",
     "results",
     "scripts",
@@ -42,6 +43,7 @@ EXCLUDED_PARTS = {
     "__pycache__",
     "chemprop_cache",
     "source_holdout_prediction_failures.parquet",
+    "datasets.tar.gz",
 }
 KEY_TABLES = {
     "master_observations": "data_processed/master_observations.parquet",
@@ -59,6 +61,9 @@ KEY_TABLES = {
     ),
     "meta_model_oos_predictions": "results/meta_model_oos_predictions.parquet",
     "meta_model_selected_candidates": "results/meta_model_selected_candidates.parquet",
+    "sc2019_external_inputs": "external_data/sc2019/sc2019_external_inputs.parquet",
+    "sc2019_external_labels": "external_data/sc2019/sc2019_external_labels.parquet",
+    "sc2019_overlap_audit": "external_data/sc2019/sc2019_overlap_audit.parquet",
 }
 
 
@@ -142,6 +147,9 @@ def _experiment_summary(root: Path) -> dict[str, Any]:
     )
     meta_predictions = pd.read_parquet(root / KEY_TABLES["meta_model_oos_predictions"])
     meta_selected = pd.read_parquet(root / KEY_TABLES["meta_model_selected_candidates"])
+    external_inputs = pd.read_parquet(root / KEY_TABLES["sc2019_external_inputs"])
+    external_labels = pd.read_parquet(root / KEY_TABLES["sc2019_external_labels"])
+    external_audit = pd.read_parquet(root / KEY_TABLES["sc2019_overlap_audit"])
     if results["run_id"].duplicated().any():
         raise RuntimeError("Canonical model results contain duplicate run IDs")
     if predictions.duplicated(["run_id", "molecule_id"]).any():
@@ -152,6 +160,10 @@ def _experiment_summary(root: Path) -> dict[str, Any]:
         raise RuntimeError("Meta-model results contain duplicate out-of-source predictions")
     if meta_selected.duplicated(["selector", "task_id"]).any():
         raise RuntimeError("A meta-model selector chose multiple candidates for one task")
+    if "intrinsic_log_s" in external_inputs:
+        raise RuntimeError("SC2019 external inputs contain the locked response")
+    if set(external_inputs["external_id"]) != set(external_labels["external_id"]):
+        raise RuntimeError("SC2019 input and label tables cover different compounds")
     chemprop_parameters = sorted(
         results.loc[results["model"].eq("chemprop"), "best_parameters"].unique()
     )
@@ -188,6 +200,16 @@ def _experiment_summary(root: Path) -> dict[str, Any]:
         "meta_model_selected_rows": int(len(meta_selected)),
         "meta_model_selectors": sorted(
             str(value) for value in meta_selected["selector"].unique()
+        ),
+        "sc2019_external_rows": int(len(external_inputs)),
+        "sc2019_external_tasks": sorted(
+            str(value) for value in external_inputs["external_task"].unique()
+        ),
+        "sc2019_exact_raw_collection_overlaps": int(
+            external_audit["exact_internal_overlap"].sum()
+        ),
+        "sc2019_exact_primary_training_overlaps": int(
+            external_audit["exact_primary_training_overlap"].sum()
         ),
         "chemprop_parameters": [json.loads(value) for value in chemprop_parameters],
     }
@@ -233,6 +255,10 @@ def build_reproducibility_artifacts(root: Path) -> dict[str, Path]:
             ),
             "Neural-network results may not be bit-identical across hardware backends.",
             "Meta-model assessment holds out complete experimental sources.",
+            (
+                "SC2019 external labels are stored separately and are not joined to the "
+                "training master."
+            ),
         ],
     }
     manifest_path.write_text(

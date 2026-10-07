@@ -9,6 +9,7 @@ python -m pip install -e . --no-deps
 
 aquasol-build-master
 aquasol-build-features
+aquasol-import-sc2019
 aquasol-build-splits
 
 aquasol-run-baselines \

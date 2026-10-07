@@ -37,6 +37,7 @@ aquasol-build-source-holdouts = "aquasol_meta.build_source_holdouts:main"
 aquasol-run-source-holdouts = "aquasol_meta.run_source_holdouts:main"
 aquasol-run-chemprop = "aquasol_meta.run_chemprop:main"
 aquasol-run-meta-model = "aquasol_meta.run_meta_model:main"
+aquasol-import-sc2019 = "aquasol_meta.import_sc2019:main"
 aquasol-build-reproducibility = "aquasol_meta.reproducibility:main"
 
 [tool.setuptools.packages.find]
