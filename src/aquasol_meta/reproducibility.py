@@ -57,6 +57,8 @@ KEY_TABLES = {
     "combined_meta_dataset": (
         "data_processed/meta_model_dataset_with_source_holdouts.parquet"
     ),
+    "meta_model_oos_predictions": "results/meta_model_oos_predictions.parquet",
+    "meta_model_selected_candidates": "results/meta_model_selected_candidates.parquet",
 }
 
 
@@ -138,12 +140,18 @@ def _experiment_summary(root: Path) -> dict[str, Any]:
         root / KEY_TABLES["source_holdout_tasks"],
         columns=["task_id", "heldout_source", "repeat", "seed"],
     )
+    meta_predictions = pd.read_parquet(root / KEY_TABLES["meta_model_oos_predictions"])
+    meta_selected = pd.read_parquet(root / KEY_TABLES["meta_model_selected_candidates"])
     if results["run_id"].duplicated().any():
         raise RuntimeError("Canonical model results contain duplicate run IDs")
     if predictions.duplicated(["run_id", "molecule_id"]).any():
         raise RuntimeError("Canonical predictions contain duplicate run/molecule rows")
     if set(results["run_id"]) != set(within_meta["run_id"]):
         raise RuntimeError("Canonical results and within meta-dataset cover different runs")
+    if meta_predictions.duplicated(["meta_model", "run_id"]).any():
+        raise RuntimeError("Meta-model results contain duplicate out-of-source predictions")
+    if meta_selected.duplicated(["selector", "task_id"]).any():
+        raise RuntimeError("A meta-model selector chose multiple candidates for one task")
     chemprop_parameters = sorted(
         results.loc[results["model"].eq("chemprop"), "best_parameters"].unique()
     )
@@ -169,6 +177,17 @@ def _experiment_summary(root: Path) -> dict[str, Any]:
         "source_seeds": sorted(int(value) for value in source_tasks["seed"].unique()),
         "heldout_sources": sorted(
             str(value) for value in source_tasks["heldout_source"].unique()
+        ),
+        "meta_model_oos_candidate_rows": int(len(meta_predictions)),
+        "meta_model_names": sorted(
+            str(value) for value in meta_predictions["meta_model"].unique()
+        ),
+        "meta_model_outer_sources": sorted(
+            str(value) for value in meta_predictions["outer_heldout_source"].unique()
+        ),
+        "meta_model_selected_rows": int(len(meta_selected)),
+        "meta_model_selectors": sorted(
+            str(value) for value in meta_selected["selector"].unique()
         ),
         "chemprop_parameters": [json.loads(value) for value in chemprop_parameters],
     }
@@ -213,7 +232,7 @@ def build_reproducibility_artifacts(root: Path) -> dict[str, Path]:
                 "and excluded from checksums."
             ),
             "Neural-network results may not be bit-identical across hardware backends.",
-            "No meta-model has been fitted at this milestone.",
+            "Meta-model assessment holds out complete experimental sources.",
         ],
     }
     manifest_path.write_text(

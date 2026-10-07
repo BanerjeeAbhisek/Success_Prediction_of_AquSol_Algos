@@ -1,8 +1,8 @@
 {
   "checksum_algorithm": "SHA-256",
   "checksum_file": "reports/artifact_checksums.csv",
-  "checksummed_bytes": 310789178,
-  "checksummed_file_count": 123,
+  "checksummed_bytes": 311947816,
+  "checksummed_file_count": 143,
   "experiment": {
     "chemprop_parameters": [
       {
@@ -32,6 +32,34 @@
       "Delaney",
       "OCHEM",
       "PHYSPROP"
+    ],
+    "meta_model_names": [
+      "bayesian_logistic_laplace",
+      "hist_gradient_boosting",
+      "logistic",
+      "random_forest"
+    ],
+    "meta_model_oos_candidate_rows": 2800,
+    "meta_model_outer_sources": [
+      "AQUA",
+      "AqSolDB",
+      "Delaney",
+      "OCHEM",
+      "PHYSPROP"
+    ],
+    "meta_model_selected_rows": 275,
+    "meta_model_selectors": [
+      "fixed_chemprop_graph",
+      "fixed_random_forest_rdkit",
+      "fixed_svr_rdkit",
+      "fixed_xgboost_rdkit",
+      "meta_bayesian_logistic_laplace",
+      "meta_hist_gradient_boosting",
+      "meta_logistic",
+      "meta_random_forest",
+      "oracle",
+      "training_source_best",
+      "validation_rmse"
     ],
     "model_run_counts": {
       "chemprop": 15,
@@ -94,7 +122,7 @@
     2.0
   ],
   "files_at_or_above_safety_threshold": [],
-  "generated_at_utc": "2026-10-05T15:04:18.983361+00:00",
+  "generated_at_utc": "2026-10-07T17:19:30.761386+00:00",
   "github_safety_threshold_bytes": 95000000,
   "locked_packages": {
     "ConfigArgParse": "1.8.0",
@@ -183,7 +211,7 @@
     "Chemprop cache files and checkpoints are excluded because they are regenerable.",
     "The Git-ignored partitioned source prediction dataset is regenerable and excluded from checksums.",
     "Neural-network results may not be bit-identical across hardware backends.",
-    "No meta-model has been fitted at this milestone."
+    "Meta-model assessment holds out complete experimental sources."
   ],
   "pipeline_script": "scripts/run_reproducible_pipeline.sh",
   "python": {
@@ -200,6 +228,14 @@
     "master_observations": {
       "columns": 45,
       "rows": 50880
+    },
+    "meta_model_oos_predictions": {
+      "columns": 16,
+      "rows": 2800
+    },
+    "meta_model_selected_candidates": {
+      "columns": 14,
+      "rows": 275
     },
     "model_results": {
       "columns": 27,

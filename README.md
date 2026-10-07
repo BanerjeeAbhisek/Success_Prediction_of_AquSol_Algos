@@ -313,6 +313,26 @@ Evaluate the meta-model by holding out complete `heldout_source` groups. The sou
 many molecules, so genuinely external datasets are still required for the strongest publication
 claim.
 
+## Evaluate the model-success meta-model
+
+After all source-holdout candidates, including Chemprop, have been integrated, run:
+
+```bash
+aquasol-run-meta-model
+```
+
+The primary response is `y_top3_candidate`. Logistic regression, a Laplace-approximate Bayesian
+logistic model, random forest and histogram gradient boosting are evaluated by leaving out one
+complete experimental source at a time. Every candidate and repeat belonging to the held-out source
+stays outside training. Source names, task IDs, repeat numbers, seeds and all `y_*` outcomes are
+excluded from the predictor matrix.
+
+The command compares the learned selectors with validation-RMSE selection, training-source choice,
+fixed SVR, Random Forest, XGBoost and Chemprop choices, and an unattainable oracle. It also writes
+paired source-bootstrap uncertainty and a feature ablation separating candidate identity,
+validation performance and solubility-specific chemistry-shift predictors. These diagnostics are
+essential: a lower point estimate alone is not evidence that the meta-selector generalizes.
+
 ## Run tests
 
 ```bash
@@ -331,8 +351,8 @@ python -m pip install -e . --no-deps
 
 The complete command order for rebuilding the current milestone from `Data/` is recorded in
 `scripts/run_reproducible_pipeline.sh`. It deliberately reproduces the current experimental scope:
-all 13 model families for both the within-benchmark and source-holdout comparisons. It does not
-train a meta-model.
+all 13 model families for both the within-benchmark and source-holdout comparisons, followed by the
+strict leave-one-source-out meta-model evaluation.
 
 After any intentional artifact change, regenerate the audit snapshot with:
 
@@ -356,7 +376,7 @@ out complete experimental sources or carefully defined chemical tasks.
 This stage prepares and audits the data, encodes a transparent first target-resolution policy,
 generates reproducible structure-derived features, fixes leakage-checked benchmark splits, runs the
 complete core baseline grid, constructs molecule- and run-level failure tables, and supports strict
-source-holdout evaluation. Genuinely external-dataset tasks remain necessary before definitive
-meta-model training.
+source-holdout and meta-model evaluation. The current five-source result is a proof of concept;
+genuinely external-dataset tasks remain necessary before claiming definitive generalization.
 Measurement-condition and provenance columns remain audit variables unless a specifically defined
 conditional-solubility task makes them available at prediction time.

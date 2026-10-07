@@ -13,6 +13,7 @@ dependencies = [
   "pandas>=2.2",
   "pyarrow>=15",
   "rdkit>=2024.3",
+  "scipy>=1.11",
   "scikit-learn>=1.4",
   "xgboost>=3.2,<4",
   "ngboost>=0.5.11,<0.6",
@@ -35,6 +36,7 @@ aquasol-build-meta-dataset = "aquasol_meta.build_failure_meta:main"
 aquasol-build-source-holdouts = "aquasol_meta.build_source_holdouts:main"
 aquasol-run-source-holdouts = "aquasol_meta.run_source_holdouts:main"
 aquasol-run-chemprop = "aquasol_meta.run_chemprop:main"
+aquasol-run-meta-model = "aquasol_meta.run_meta_model:main"
 aquasol-build-reproducibility = "aquasol_meta.reproducibility:main"
 
 [tool.setuptools.packages.find]

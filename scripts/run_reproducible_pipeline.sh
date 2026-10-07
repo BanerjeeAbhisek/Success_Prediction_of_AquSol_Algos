@@ -31,5 +31,6 @@ aquasol-run-source-holdouts \
 aquasol-run-chemprop --design source --append-canonical
 
 aquasol-build-meta-dataset
+aquasol-run-meta-model
 aquasol-build-reproducibility
 pytest

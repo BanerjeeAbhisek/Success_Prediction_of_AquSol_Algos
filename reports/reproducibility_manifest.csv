@@ -1,6 +1,6 @@
 metric,value
 manifest_schema_version,1
-generated_at_utc,2026-10-05T15:04:18.983361+00:00
+generated_at_utc,2026-10-07T17:19:30.761386+00:00
 status,pass
 python.version,"3.11.4 (v3.11.4:d2340ef257, Jun  6 2023, 19:15:51) [Clang 13.0.0 (clang-1300.0.29.30)]"
 python.implementation,CPython
@@ -107,6 +107,10 @@ table_counts.source_meta_dataset.rows,775
 table_counts.source_meta_dataset.columns,123
 table_counts.combined_meta_dataset.rows,1240
 table_counts.combined_meta_dataset.columns,123
+table_counts.meta_model_oos_predictions.rows,2800
+table_counts.meta_model_oos_predictions.columns,16
+table_counts.meta_model_selected_candidates.rows,275
+table_counts.meta_model_selected_candidates.columns,14
 experiment.within_model_runs,465
 experiment.within_prediction_rows,417105
 experiment.within_tasks,15
@@ -159,6 +163,28 @@ experiment.heldout_sources,AqSolDB
 experiment.heldout_sources,Delaney
 experiment.heldout_sources,OCHEM
 experiment.heldout_sources,PHYSPROP
+experiment.meta_model_oos_candidate_rows,2800
+experiment.meta_model_names,bayesian_logistic_laplace
+experiment.meta_model_names,hist_gradient_boosting
+experiment.meta_model_names,logistic
+experiment.meta_model_names,random_forest
+experiment.meta_model_outer_sources,AQUA
+experiment.meta_model_outer_sources,AqSolDB
+experiment.meta_model_outer_sources,Delaney
+experiment.meta_model_outer_sources,OCHEM
+experiment.meta_model_outer_sources,PHYSPROP
+experiment.meta_model_selected_rows,275
+experiment.meta_model_selectors,fixed_chemprop_graph
+experiment.meta_model_selectors,fixed_random_forest_rdkit
+experiment.meta_model_selectors,fixed_svr_rdkit
+experiment.meta_model_selectors,fixed_xgboost_rdkit
+experiment.meta_model_selectors,meta_bayesian_logistic_laplace
+experiment.meta_model_selectors,meta_hist_gradient_boosting
+experiment.meta_model_selectors,meta_logistic
+experiment.meta_model_selectors,meta_random_forest
+experiment.meta_model_selectors,oracle
+experiment.meta_model_selectors,training_source_best
+experiment.meta_model_selectors,validation_rmse
 experiment.chemprop_parameters.0.architecture,D-MPNN
 experiment.chemprop_parameters.0.batch_size,64
 experiment.chemprop_parameters.0.depth,3
@@ -175,12 +201,12 @@ failure_thresholds_log_s,1.0
 failure_thresholds_log_s,2.0
 checksum_algorithm,SHA-256
 checksum_file,reports/artifact_checksums.csv
-checksummed_file_count,123
-checksummed_bytes,310789178
+checksummed_file_count,143
+checksummed_bytes,311947816
 github_safety_threshold_bytes,95000000
 files_at_or_above_safety_threshold,[]
 pipeline_script,scripts/run_reproducible_pipeline.sh
 notes,Chemprop cache files and checkpoints are excluded because they are regenerable.
 notes,The Git-ignored partitioned source prediction dataset is regenerable and excluded from checksums.
 notes,Neural-network results may not be bit-identical across hardware backends.
-notes,No meta-model has been fitted at this milestone.
+notes,Meta-model assessment holds out complete experimental sources.

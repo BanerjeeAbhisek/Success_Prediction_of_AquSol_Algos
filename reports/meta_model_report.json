@@ -1,0 +1,269 @@
+{
+  "ablation_models": [
+    "hgb_identity_only",
+    "hgb_identity_validation",
+    "hgb_task_chemistry_no_validation",
+    "hgb_full"
+  ],
+  "bayesian_method": "Gaussian Laplace approximation around the L2-regularized logistic MAP estimate. Reported intervals quantify coefficient uncertainty in the top-three probability and are conservatively expanded to contain the logistic-normal point estimate.",
+  "best_ablation_mean_rmse_regret": 0.013198232481144991,
+  "best_ablation_selector": "meta_hgb_identity_only",
+  "best_non_oracle_mean_rmse_regret": 0.018101540111979984,
+  "best_non_oracle_selector": "meta_hist_gradient_boosting",
+  "best_selector_bootstrap_probability_better_than_strongest_comparator": 0.7415,
+  "best_selector_paired_regret_difference_lower_95": -0.016320152611961708,
+  "best_selector_paired_regret_difference_upper_95": 0.006038591658441726,
+  "best_selector_paired_regret_difference_vs_strongest_comparator": -0.004689290823133696,
+  "candidates_per_task": [
+    28
+  ],
+  "eligible_candidate_rows": 700,
+  "evaluation_design": "leave_one_heldout_source_out",
+  "excluded_identifiers": [
+    "run_id",
+    "task_id",
+    "heldout_source",
+    "repeat",
+    "seed"
+  ],
+  "excluded_outcomes": [
+    "y_failure_rate_gt_0p5",
+    "y_failure_rate_gt_1p0",
+    "y_failure_rate_gt_2p0",
+    "y_maximum_absolute_error",
+    "y_mean_residual",
+    "y_median_absolute_error",
+    "y_overprediction_rate",
+    "y_p90_absolute_error",
+    "y_p95_absolute_error",
+    "y_primary_failure_rate",
+    "y_rank_within_task",
+    "y_residual_sd",
+    "y_rmse_regret_vs_best",
+    "y_test_mae",
+    "y_test_r2",
+    "y_test_rmse",
+    "y_test_spearman",
+    "y_top3_candidate",
+    "y_underprediction_rate",
+    "y_within_0p1_log_s_of_best"
+  ],
+  "full_feature_hgb_mean_rmse_regret": 0.018101540111979984,
+  "identity_only_hgb_mean_rmse_regret": 0.013198232481144991,
+  "independent_source_groups": 5,
+  "leakage_policy": "Every candidate and repeat from one source is held out together. Source names, task identifiers, seeds, repeat numbers and all held-out outcomes are excluded from X.",
+  "meta_models": [
+    "logistic",
+    "bayesian_logistic_laplace",
+    "random_forest",
+    "hist_gradient_boosting"
+  ],
+  "output_files": {
+    "ablation_discrimination_csv": {
+      "bytes": 3040,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_ablation_discrimination.csv"
+    },
+    "ablation_fold_performance_csv": {
+      "bytes": 2021,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_ablation_fold_performance.csv"
+    },
+    "ablation_performance_csv": {
+      "bytes": 493,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_ablation_performance.csv"
+    },
+    "ablation_predictions_parquet": {
+      "bytes": 44532,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_ablation_oos_predictions.parquet"
+    },
+    "ablation_selected_csv": {
+      "bytes": 24845,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_ablation_selected_candidates.csv"
+    },
+    "discrimination_csv": {
+      "bytes": 3022,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_discrimination_summary.csv"
+    },
+    "feature_audit_csv": {
+      "bytes": 3863,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/reports/meta_model_feature_audit.csv"
+    },
+    "feature_importance_csv": {
+      "bytes": 165958,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_feature_importance.csv"
+    },
+    "fold_performance_csv": {
+      "bytes": 5095,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_fold_performance.csv"
+    },
+    "oos_predictions_csv": {
+      "bytes": 679332,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_oos_predictions.csv"
+    },
+    "oos_predictions_parquet": {
+      "bytes": 66293,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_oos_predictions.parquet"
+    },
+    "paired_comparisons_csv": {
+      "bytes": 4631,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_paired_comparisons.csv"
+    },
+    "performance_csv": {
+      "bytes": 1077,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_performance_summary.csv"
+    },
+    "selected_candidates_csv": {
+      "bytes": 64008,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_selected_candidates.csv"
+    },
+    "selected_candidates_parquet": {
+      "bytes": 15188,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_selected_candidates.parquet"
+    },
+    "uncertainty_csv": {
+      "bytes": 4778,
+      "path": "/Users/abhisekbanerjee/Desktop/MU - Sem 5/Research/Chemical Solubilility/Success_Prediction_of_AquSol_Algos/results/meta_model_bootstrap_uncertainty.csv"
+    }
+  },
+  "positive_prevalence": 0.10714285714285714,
+  "positive_rows": 75,
+  "predictor_columns": [
+    "x_model",
+    "x_model_class",
+    "x_feature_type",
+    "x_features_after_preprocessing",
+    "x_fit_molecules",
+    "x_fit_scaffold_count",
+    "x_fit_log_s_mean",
+    "x_fit_log_s_std",
+    "x_fit_log_s_iqr",
+    "x_fit_mean_observation_count",
+    "x_fit_multiple_source_fraction",
+    "x_fit_single_observation_fraction",
+    "x_test_molecules",
+    "x_test_scaffold_count",
+    "x_test_unseen_scaffold_fraction",
+    "x_test_max_train_similarity_median",
+    "x_test_max_train_similarity_p10",
+    "x_test_similarity_below_0p3_fraction",
+    "x_test_similarity_below_0p5_fraction",
+    "x_shift_mol_wt_smd",
+    "x_shift_mol_log_p_smd",
+    "x_shift_tpsa_smd",
+    "x_shift_fraction_csp3_smd",
+    "x_shift_rotatable_bonds_smd",
+    "x_shift_ring_count_smd",
+    "x_validation_rmse",
+    "x_validation_mae",
+    "x_validation_r2",
+    "x_validation_spearman",
+    "x_hp_C",
+    "x_hp_alpha",
+    "x_hp_architecture",
+    "x_hp_batch_size",
+    "x_hp_depth",
+    "x_hp_dropout",
+    "x_hp_early_stopping_patience",
+    "x_hp_ensemble_size",
+    "x_hp_epsilon",
+    "x_hp_ffn_hidden_dim",
+    "x_hp_ffn_num_layers",
+    "x_hp_gamma",
+    "x_hp_hidden_layer_sizes",
+    "x_hp_l1_ratio",
+    "x_hp_l2_regularization",
+    "x_hp_learning_rate",
+    "x_hp_max_depth",
+    "x_hp_max_features",
+    "x_hp_max_leaf_nodes",
+    "x_hp_maximum_epochs",
+    "x_hp_message_hidden_dim",
+    "x_hp_min_child_weight",
+    "x_hp_min_samples_leaf",
+    "x_hp_minibatch_frac",
+    "x_hp_n_estimators",
+    "x_hp_n_neighbors",
+    "x_hp_strategy",
+    "x_hp_weights"
+  ],
+  "predictor_count": 57,
+  "primary_target": "y_top3_candidate",
+  "primary_target_definition": "One when a selection-eligible candidate is among the three lowest test-RMSE candidates within its source-holdout task; zero otherwise.",
+  "publication_limitation": "Five source groups support a leakage-safe proof of concept but provide limited independent sample size. A genuinely external sixth dataset remains important.",
+  "selector_results": {
+    "fixed_chemprop_graph": {
+      "mean_rmse_regret": 0.07886117379168464,
+      "mean_selected_test_rmse": 1.0047154474342832,
+      "top3_selection_rate": 0.28,
+      "within_0p1_of_best_rate": 0.76
+    },
+    "fixed_random_forest_rdkit": {
+      "mean_rmse_regret": 0.06743639932308165,
+      "mean_selected_test_rmse": 0.9932906729656803,
+      "top3_selection_rate": 0.24,
+      "within_0p1_of_best_rate": 0.8
+    },
+    "fixed_svr_rdkit": {
+      "mean_rmse_regret": 0.028646510088534596,
+      "mean_selected_test_rmse": 0.9545007837311331,
+      "top3_selection_rate": 0.6,
+      "within_0p1_of_best_rate": 1.0
+    },
+    "fixed_xgboost_rdkit": {
+      "mean_rmse_regret": 0.02279083093511368,
+      "mean_selected_test_rmse": 0.9486451045777125,
+      "top3_selection_rate": 0.96,
+      "within_0p1_of_best_rate": 1.0
+    },
+    "meta_bayesian_logistic_laplace": {
+      "mean_rmse_regret": 0.02678973397928606,
+      "mean_selected_test_rmse": 0.9526440076218848,
+      "top3_selection_rate": 0.88,
+      "within_0p1_of_best_rate": 1.0
+    },
+    "meta_hist_gradient_boosting": {
+      "mean_rmse_regret": 0.018101540111979984,
+      "mean_selected_test_rmse": 0.9439558137545787,
+      "top3_selection_rate": 0.88,
+      "within_0p1_of_best_rate": 1.0
+    },
+    "meta_logistic": {
+      "mean_rmse_regret": 0.02678973397928606,
+      "mean_selected_test_rmse": 0.9526440076218848,
+      "top3_selection_rate": 0.88,
+      "within_0p1_of_best_rate": 1.0
+    },
+    "meta_random_forest": {
+      "mean_rmse_regret": 0.02585183693781766,
+      "mean_selected_test_rmse": 0.9517061105804163,
+      "top3_selection_rate": 0.88,
+      "within_0p1_of_best_rate": 1.0
+    },
+    "oracle": {
+      "mean_rmse_regret": 0.0,
+      "mean_selected_test_rmse": 0.9258542736425988,
+      "top3_selection_rate": 1.0,
+      "within_0p1_of_best_rate": 1.0
+    },
+    "training_source_best": {
+      "mean_rmse_regret": 0.04867938874850131,
+      "mean_selected_test_rmse": 0.9745336623911001,
+      "top3_selection_rate": 0.6,
+      "within_0p1_of_best_rate": 1.0
+    },
+    "validation_rmse": {
+      "mean_rmse_regret": 0.033158643999593715,
+      "mean_selected_test_rmse": 0.9590129176421925,
+      "top3_selection_rate": 0.84,
+      "within_0p1_of_best_rate": 1.0
+    }
+  },
+  "source_rows_before_eligibility_filter": 775,
+  "source_tasks": 25,
+  "status": "pass",
+  "strongest_practical_comparator": "fixed_xgboost_rdkit",
+  "strongest_practical_comparator_mean_rmse_regret": 0.02279083093511368,
+  "task_chemistry_improved_regret_over_identity_only": false,
+  "uncertainty_method": "Percentile bootstrap with 2000 resamples of complete held-out source clusters. With only five source clusters, intervals are exploratory.",
+  "within_benchmark_exclusion_reason": "The primary claim concerns unseen experimental sources; ordinary within-dataset splits are not independent source groups and are excluded from model assessment.",
+  "within_benchmark_rows_used": false
+}

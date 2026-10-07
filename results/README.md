@@ -43,3 +43,10 @@ within-benchmark design, `--append-canonical` retains these standalone files whi
 15 Chemprop rows to `model_results.*`, `test_predictions.*`, and `hyperparameter_results.*`. For
 the source design, it adds 25 Chemprop runs to the source result, failure-label, source-meta and
 combined-meta artifacts.
+
+`aquasol-run-meta-model` writes `meta_model_oos_predictions.*` and
+`meta_model_selected_candidates.*` from strict leave-one-source-out evaluation. Compact CSV tables
+summarize candidate discrimination, selected-model regret, per-source performance, source-cluster
+bootstrap uncertainty, paired comparisons with practical baselines, transformed-feature importance
+and chemistry-feature ablations. The oracle rows are a lower bound and are never a deployable
+selector.
